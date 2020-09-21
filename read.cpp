@@ -1,30 +1,46 @@
-#include<sstream>
-#include"read.h"
+#include<iostream>
 
-Record::Record(string date, string hour, string fileName)
+using namespace std;
+
+class Record
 {
-    this->date = date; 
-    this->hour = hour;
-    this->fileName = fileName;
-}
-
-void Record::readFile(string path)
-{
-    ifstream fileIn;
-    fileIn.open(path); // Open file
-
-    string line, parts; // Line would represent a whole line of csv and parts would represent each individual value
-
-    while (fileIn.good())
+public:
+    string date;
+    string hour;
+    string sourceIP;
+    string sourcePort;
+    string sourceName;
+    string destinationIP;
+    string destinationPort;
+    string destinationName;
+    
+    Record()
     {
-        getline(fileIn, line);
-        istringstream sIn(line);
-        
-        while (getline(line, sIn, ','))
-        {
-            std::cout << (sIn) << endl;
-        }
-        break;   
+        date = ""; 
+        hour = "";
+        sourceIP = "";
+        sourcePort = "";
+        sourceName = "";
+        destinationIP = "";
+        destinationPort = "";
+        destinationName = "";
     }
-}
+
+    Record(string date_, string hour_, string sourceIP_, string sourcePort_, string sourceName_, string destinationIP_, string destinationPort_, string destinationName_)
+    {
+        date = date_; 
+        hour = hour_;
+        sourceIP = sourceIP_;
+        sourcePort = sourcePort_;
+        sourceName = sourceName_;
+        destinationIP = destinationIP_;
+        destinationPort = destinationPort_;
+        destinationName = destinationName_;
+
+    }
+
+};
+
+
+
 
