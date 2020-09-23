@@ -34,9 +34,7 @@ void read(string path)
     
         records.push_back(register_);
         
-        values.clear();
-        break;
-        
+        values.clear();        
     }
 
 };
@@ -47,7 +45,35 @@ int main()
     string path = "/mnt/c/Users/matug/documents/school/Semestre 3/Reto algoritmo/equipo3.csv";
     read(path);
 
-    cout << ("10-8-2020" < "13-8-2020") << endl;
+    int i = 0;
+    Record first_date = records[0];
+    Record next_date = records[i];
+
+    // Primera pregunta: ¿Cuántos registros tiene tu archivo?
+    cout << "Mi archivo contiene " << records.size() << " registros." << endl;
+  
+    while (first_date.date == next_date.date)
+    {
+        i++;
+        next_date = records[i];
+        
+    }
+    
+    // Segunda pregunta: ¿Cuántos récords hay en el segundo día registrado? ¿Qué día es este?
+    cout << "El segundo día en el registro es " << records[i].date << endl;
+
+    first_date = records[i];
+    next_date = records[i];
+
+    while (first_date.date == next_date.date)
+    {
+        i++;
+        next_date = records[i];
+        
+    }
+
+    cout << "El segundo día de mi registro contiene " << i << " récords." << endl;
+
 
     return 0;
 }

@@ -1,4 +1,5 @@
 #include<iostream>
+#include<vector>
 
 using namespace std;
 
@@ -17,20 +18,21 @@ public:
     }
 };
 
+template <class T>
 class MergeSort : public Sort<T>
 {
 public:
 
     void sort(vector<T> &data)
     {
-        sortAux(data, 0, data.size() - 1)
+        sortAux(data, 0, data.size() - 1);
     }
 
     void sortAux(vector<T> &data, int low, int high)
     {
         if(low >= high)
         {
-            return -1;
+            return;
         }
         int mid = (low + high)/2;
         sortAux(data, low, mid);
