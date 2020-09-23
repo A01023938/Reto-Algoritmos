@@ -13,7 +13,7 @@ void read(string path)
     ifstream fileIn;
     fileIn.open(path);
     string line, parts;
-    string values[8];
+    vector<string> values;
     while(fileIn.good())
     {
         getline(fileIn, line);
@@ -22,27 +22,19 @@ void read(string path)
         int i = 0;
         while(getline(sIn, parts, ','))
         {
-            cout << i << endl;
-            values[i] = parts;
-            cout << values[i] << endl;
-            i++;
+            values.push_back(parts);
         }
 
-        cout << "Hello" << endl;
-
-        // if (values[7].find('\r') != values[7].npos)
-        // {
-        //     values[7] = values[7].substr(0, values[7].size() - 1);
-        // }
-
-        cout << "hello 2" << endl;
+        if (values[7].find('\r') != values[7].npos)
+        {
+            values[7] = values[7].substr(0, values[7].size() - 1);
+        }
 
         Record register_(values[0], values[1], values[2], values[3], values[4], values[5], values[6], values[7]);
     
         records.push_back(register_);
         
-        // values.clear();
-        cout << "Done processing" << endl;
+        values.clear();
         break;
         
     }
@@ -54,6 +46,8 @@ int main()
 
     string path = "/mnt/c/Users/matug/documents/school/Semestre 3/Reto algoritmo/equipo3.csv";
     read(path);
+
+    cout << ("10-8-2020" < "13-8-2020") << endl;
 
     return 0;
 }
