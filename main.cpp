@@ -155,7 +155,69 @@ int main()
         cout << "Ninguna computadora pertenece a Raymond." << endl;
     }
     
-
+    // Pregunta 4
     
+    vector<string> source_IP;
+
+    for (int i = 0; i < records.size(); i++)
+    {
+        object = records[i];
+        source_IP.push_back(object.sourceIP);
+    }
+
+    hello.sort(source_IP);
+
+    cout << "La dirección IP interna de la compañia es 172.21.104 seguido de un identificador de la computadora dentro de la red." << endl;
+
+    // for (int i = 1000; i < 1100; i++)
+    // {
+    //     cout << source_IP[i] << endl;
+    // }
+
+    // Pregunta 5 ¿Alguna computadora se llama server.reto.com?
+
+    if (search.binarySearch("server.reto.com"))
+    {
+        cout << "Si existe una computadora que se llame server.reto.com." << endl;
+    }else
+    {
+        cout << "No existe una computadora que se llame server.reto.com." << endl;
+    }
+    
+    // Pregunta 6 ¿Qué servicio de mail utilizan de todos estos: gmail.com, outlook.com, protonmail.com, freemailserver.com?
+
+    vector<string> destination_names;
+
+   for (int i = 0; i < records.size(); i++)
+    {
+        object = records[i];
+        destination_names.push_back(object.destinationName);
+    }
+
+    hello.sort(destination_names);
+
+    Search<string> search_2(destination_names);
+    
+
+    if (search_2.binarySearch("gmail.com"))
+    {
+        cout << "Los empleados de la compañia usan gmail.com." << endl;
+    }
+
+    if (search_2.binarySearch("outlook.com"))
+    {
+        cout << "Los empleados de la compañia usan outlook.com." << endl;
+    }
+
+    if (search_2.binarySearch("protonmail.com"))
+    {
+        cout << "Los empleados de la compañia usan protonmail.com." << endl;
+    }
+
+    if (search_2.binarySearch("freemailserver.com"))
+    {
+        cout << "Los empleados de la compañia usan freemailserver.com." << endl;
+    }
+
     return 0;
 }
