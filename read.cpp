@@ -36,6 +36,18 @@ public:
         destinationIP = destinationIP_;
         destinationPort = destinationPort_;
         destinationName = destinationName_;
+    }
+
+    void print()
+    {
+        cout << date << endl;
+        cout << hour << endl;
+        cout << sourceIP << endl;
+        cout << sourcePort << endl;
+        cout << sourceName << endl;
+        cout << destinationIP << endl;
+        cout << destinationPort << endl;
+        cout << destinationName << endl;
 
     }
 

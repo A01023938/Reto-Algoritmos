@@ -89,5 +89,44 @@ public:
         }
     }
 
+};
 
+template <class T>
+class QuickSort: public Sort<T>{
+	public:
+	void sort(vector<T> &data){
+		sortAux(data, 0, data.size()-1);
+	}
+	
+	void sortAux(vector<T> &data, int low, int hi){
+		if(low>=hi){
+			return;
+		}
+		int j=partition(data, low, hi);//poner pivote en su lugar
+		sortAux(data, low, j-1);//lado izquierdo
+		sortAux(data, j+1, hi);//lado derecho
+		
+	}
+	
+	int partition(vector<T> &data, int low, int hi){
+		int pivote=low;
+		int i=low+1;
+		int j=hi;
+		while(true){
+			while(data[i]<=data[pivote]&& i<hi){
+				i++;
+			}
+			while(data[j]>data[pivote]&& j>low){
+				j--;
+			}
+			if (i>=j){
+				break;
+			}else{
+				this->exchange(data, i, j);
+			}
+		}
+		this->exchange(data, pivote, j);
+		return j;
+	}
+	
 };

@@ -3,6 +3,8 @@
 #include<sstream>
 #include<vector>
 #include"read.cpp"
+#include"sort.cpp"
+#include"search.cpp"
 
 using namespace std;
 
@@ -74,6 +76,86 @@ int main()
 
     cout << "El segundo día de mi registro contiene " << i << " récords." << endl;
 
+    // Pregunta 3
+    vector<string> source_names;
 
+    Record object;
+
+    for (int i = 0; i < records.size(); i++)
+    {
+        object = records[i];
+        source_names.push_back(object.sourceName);
+    }
+    
+    QuickSort<string> hello;
+    
+    hello.sort(source_names);
+    
+    Search<string> search(source_names);
+
+    // ¿Alguna de las computadoras pertenece a Jeffrey, Betty, Katherine, Scott, Benjamin, Samuel o Raymond?
+    string samuel = "samuel.reto.com";
+    string jeffrey = "jeffrey.reto.com";
+    string katherine = "katherine.reto.com";
+    string betty = "betty.reto.com";
+    string benjamin = "benjamin.reto.com";
+    string raymond = "raymond.reto.com";
+
+    if (search.binarySearch(samuel))
+    {
+        cout << "Una computadora pertenece a Samuel." << endl;
+    }else
+    {
+        cout << "Ninguna computadora pertenece a Samuel." << endl;
+    }
+    
+    
+    if (search.binarySearch(jeffrey))
+    {
+        cout << "Una computadora pertenece a Jeffrey." << endl;
+    }else
+    {
+        cout << "Ninguna computadora pertenece a Jeffrey." << endl;
+
+    }
+    
+
+    if (search.binarySearch(katherine))
+    {
+        cout << "Una computadora pertenece a Katherine." << endl;
+    }else
+    {
+        cout << "Ninguna computadora pertenece a Katherine." << endl;
+    }
+    
+
+    if (search.binarySearch(betty))
+    {
+        cout << "Una computadora pertenece a Betty." << endl;
+    }else
+    {
+        cout << "Ninguna computadora pertenece a Betty." << endl;
+    }
+    
+
+    if (search.binarySearch(benjamin))
+    {
+        cout << "Una computadora pertenece a Benjamin." << endl;
+    }else
+    {
+        cout << "Ninguna computadora pertenece a Benjamin." << endl;
+    }
+    
+
+    if (search.binarySearch(raymond))
+    {
+        cout << "Una computadora pertenece a Raymond." << endl;
+    }else
+    {
+        cout << "Ninguna computadora pertenece a Raymond." << endl;
+    }
+    
+
+    
     return 0;
 }
