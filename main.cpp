@@ -2,6 +2,7 @@
 #include<fstream>
 #include<sstream>
 #include<vector>
+#include<algorithm>
 #include"read.cpp"
 #include"sort.cpp"
 #include"search.cpp"
@@ -218,6 +219,43 @@ int main()
     {
         cout << "Los empleados de la compañia usan freemailserver.com." << endl;
     }
+
+
+    // Pregunta 7 Considerando solamente los puertos destino ¿Qué puertos abajo del 1000 se están usando? Lista los puertos e investiga que aplicación/servicio lo utiliza generalmente.
+
+    vector<string> destination_ports;
+    vector<string> good_ports;
+
+    for (int i = 0; i < records.size(); i++)
+    {
+        object = records[i];
+        destination_ports.push_back(object.destinationPort);
+    }
+
+    hello.sort(destination_ports);
+
+    for (int i = 0; i < destination_ports.size(); i++)
+    {
+        if (find(good_ports.begin(),good_ports.end(), destination_ports[i]) != good_ports.end())
+        {
+            
+        }else
+        {
+            if (destination_ports[i] != "-")
+            {
+                if (stoi(destination_ports[i]) < 1000)
+                {
+                    good_ports.push_back(destination_ports[i]);
+                }
+            }
+        }
+    }
+    
+    for (int i = 0; i < good_ports.size(); i++)
+    {
+        cout << good_ports[i] << endl;
+    }
+    
 
     return 0;
 }
