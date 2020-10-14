@@ -45,7 +45,7 @@ int main()
 {
     // Vector de records
 
-    string path = "/mnt/c/Users/matug/documents/school/Semestre 3/Reto algoritmo/equipo3.csv";
+    string path = "/mnt/c/Users/matug/documents/school/Semestre 3/Reto algoritmo/datos.csv";
     read(path);
 
     int i = 0;
@@ -184,6 +184,8 @@ int main()
     {
         cout << "No existe una computadora que se llame server.reto.com." << endl;
     }
+
+    source_names.clear();
     
     // Pregunta 6 ¿Qué servicio de mail utilizan de todos estos: gmail.com, outlook.com, protonmail.com, freemailserver.com?
 
