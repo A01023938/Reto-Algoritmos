@@ -1,6 +1,7 @@
 #include<iostream>
 #include<stack>
 #include<queue>
+#include<typeinfo>
 
 using namespace std;
 
@@ -36,7 +37,13 @@ public:
         /* 
         Get first element in the stack. 
         */
-        return this->ConIN.top();
+       if(this->ConINSize() != 0)
+       {
+            return this->ConIN.top();
+       }else
+       {
+           return "There are no elements in the stack";
+       }
 
     }
 
@@ -65,7 +72,15 @@ public:
         /*
         Get first element in of the queue.
         */
-        return this->ConOUT.top();
+        if(this->ConOUT.size() != 0)
+        {
+            return this->ConOUT.front();
+        }else
+        {
+            return "There are no elements in the queue";
+        }
+        
+        
     }
 
     void removeConnectionOUT()
@@ -74,6 +89,23 @@ public:
         Remove the first element from the queue.
         */
        this->ConOUT.pop();
+    }
+
+    int ConINSize()
+    {
+        /*
+        Returns the size of ConIN.
+        */ 
+        return this->ConIN.size();
+        
+    }
+
+    int ConOUTSize()
+    {
+        /*
+        Returns the size of ConOUT.
+        */
+        return this->ConOUT.size();        
     }
 
 };
