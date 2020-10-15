@@ -68,26 +68,13 @@ public:
         return this->ConOUT.top();
     }
 
+    void removeConnectionOUT()
+    {
+        /*
+        Remove the first element from the queue.
+        */
+       this->ConOUT.pop();
+    }
+
 };
 
-
-int main()
-{
-
-    ComputerConnections<string> test("IP prueba", "Mateo");
-
-    test.addConnectionIN("000.000.000.000");
-    test.addConnectionIN("001.001.001.001");
-    test.addConnectionIN("002.002.002.002");
-    test.addConnectionIN("003.003.003.003");
-
-    cout << test.getConnectionIN() << endl;
-
-    test.removeConnectionIN();
-
-    cout << test.getConnectionIN() << endl;
-
-    
-
-    return 0;
-}

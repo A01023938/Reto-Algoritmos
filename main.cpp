@@ -6,6 +6,7 @@
 #include"read.cpp"
 #include"sort.cpp"
 #include"search.cpp"
+#include"Conexiones.cpp"
 
 using namespace std;
 
