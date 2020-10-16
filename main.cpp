@@ -341,7 +341,6 @@ int main()
             if (num == 3)
             {
                 cout << "It made 3 consequently connections to " << last_connection << endl;
-                break;
             }            
         }else
         {
@@ -354,10 +353,22 @@ int main()
     cout << "===============================================================================================" << endl;
 
 
-
-
+    for (int i = 0; i < records.size(); i++)
+    {
+        if(records[i].destinationIP == "122.210.219.145")
+        {
+            cout << records[i].destinationName << endl;
+            break;
+        }
+    }
     
-
+    // Bad IPs
+    // 122.210.219.145
+    
+    // Good IPs
+    // 161.229.35.160 gmail.com
+    // 201.65.34.164 twitter.com
+    // 36.160.190.27 microsoft.com
     
 
 
