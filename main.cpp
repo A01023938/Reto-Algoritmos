@@ -4,6 +4,7 @@
 #include<vector>
 #include<string>
 #include<algorithm>
+#include<unordered_map>
 #include"read.cpp"
 #include"sort.cpp"
 #include"search.cpp"
@@ -266,6 +267,16 @@ int main()
 
    // Generate IP
    // IP's that connected to other computers in the network [28,99]
+
+
+    unordered_map< string, ComputerConnections<string> > CCDict;
+
+    for (int i = 0; i < records.size(); i++)
+    {
+        ComputerConnections<string> IP(records[i].sourceIP)
+    }
+    
+
     cout << endl;
     int num;
     cout << "Please choose a computer to examine. Remember that the computer ID must be between 1 and 150" << endl;
@@ -370,7 +381,11 @@ int main()
     // 201.65.34.164 twitter.com
     // 36.160.190.27 microsoft.com
     
-
+    /*
+    To do list:
+    - Make a dictionary that has the Ip address and an object Computer connections
+    - Investigate bad Ip's
+    */
 
     return 0;
 }
