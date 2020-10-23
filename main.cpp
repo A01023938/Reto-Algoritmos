@@ -5,6 +5,7 @@
 #include<string>
 #include<algorithm>
 #include<unordered_map>
+#include<unordered_set>
 #include"read.cpp"
 #include"sort.cpp"
 #include"search.cpp"
@@ -271,107 +272,152 @@ int main()
 
     unordered_map< string, ComputerConnections<string> > CCDict;
 
-    for (int i = 0; i < records.size(); i++)
-    {
-        ComputerConnections<string> IP(records[i].sourceIP)
-    }
-    
+    unordered_set<string> destination_names_set;
 
-    cout << endl;
-    int num;
-    cout << "Please choose a computer to examine. Remember that the computer ID must be between 1 and 150" << endl;
-    cout << "172.21.104.";
-    cin >> num;
-    while (num < 1 || num > 150)
-    {
-        cout << "This number is not between 1 and 150. Please choose another number." << endl;
-        cout << "172.21.104.";
-        cin >> num;
-    }
-    
-    string Using_IP = "172.21.104." + to_string(num);
-    
-    ComputerConnections<string> GeneratedIP(Using_IP, "IP Generada por el usuario");
-
-    // date-hour-SourceIP-SourcePort-SourceName-destinationIP-destinationPort-destinationName
-
+    unordered_set<string> ip;
 
     for (int i = 0; i < records.size(); i++)
     {
-        // The computer connected somewhere
-        if(records[i].sourceIP == Using_IP)
+        if (records[i].destinationName.find("reto.com") == string::npos && records[i].destinationName.find("-") == string::npos)
         {
-            // To which places our computer has connected
-            GeneratedIP.addConnectionOUT(records[i].destinationIP);
+            destination_names_set.insert(records[i].destinationName);
         }
-        // Another computer connected to our IP
-        if(records[i].destinationIP == Using_IP)
-        {
-            // Add the computer IP that connected to our computer
-            GeneratedIP.addConnectionIN(records[i].sourceIP);
-        }
+        
     }
-    cout << "This computer has connected to " << GeneratedIP.ConOUTSize() << " IPs." << endl;
-    cout << "This computer was accessed " << GeneratedIP.ConINSize() << " time(s)." << endl;
-    cout << endl;
-    cout << "===============================================================================================" << endl;
-    cout << endl;
-    cout << "The computer with the IP '172.21.104.99' has connected to many other computers in our network." << endl;
-    cout << endl;
-    ComputerConnections<string> PossibleAttack("172.21.104.99", "Possible Attack");
 
     for (int i = 0; i < records.size(); i++)
     {
-        // The computer connected somewhere
-        if(records[i].sourceIP == "172.21.104.99")
+        if(records[i].destinationIP.find("-") == string::npos)
         {
-            // To which places our computer has connected
-            PossibleAttack.addConnectionOUT(records[i].destinationIP);
+            ip.insert(records[i].destinationIP);
         }
-        // Another computer connected to our IP
-        if(records[i].destinationIP == "172.21.104.99")
+        
+        if(records[i].sourceIP.find("-") == string::npos)
         {
-            // Add the computer IP that connected to our computer
-            PossibleAttack.addConnectionIN(records[i].sourceIP);
+            ip.insert(records[i].sourceIP);
         }
     }
-
-
-    cout << "Its last connection was made to the IP " << PossibleAttack.getConnectionOUT() << endl;
-    cout << "It was accessed last by " << PossibleAttack.getConnectionIN() << endl;
-    cout << "It connected to " << PossibleAttack.ConOUTSize() << " IPs" << endl;
-    cout << "It was accessed " << PossibleAttack.ConINSize() << " time(s)" << endl;
-
-    string last_connection = "000.000.000.000";
-    int n = 0;
-    while (PossibleAttack.ConOUTSize() != 0)
+    
+    for (auto i = ip.begin(); i != ip.end(); i++)
     {
-        if(PossibleAttack.getConnectionOUT() == last_connection)
+
+        ComputerConnections<string> IP(*i, *i);
+
+        for (int j = 0; j < records.size(); j++)
         {
-            num += 1;
-            if (num == 3)
+            if (records[j].sourceIP == *i)
             {
-                cout << "It made 3 consequently connections to " << last_connection << endl;
-            }            
-        }else
-        {
-            num = 0;
+                IP.addConnectionOUT(records[j].destinationIP);
+            }
+            if (records[j].destinationIP == *i)
+            {
+                IP.addConnectionIN(records[j].sourceIP);
+            }
         }
-        last_connection = PossibleAttack.getConnectionOUT();
-        PossibleAttack.removeConnectionOUT();
+
+        pair<string, ComputerConnections<string> > PairIP (*i, IP);
+        
+        CCDict.insert(PairIP);
+
     }
-    cout << endl;
-    cout << "===============================================================================================" << endl;
+    
+    
+
+    // cout << endl;
+    // int num;
+    // cout << "Please choose a computer to examine. Remember that the computer ID must be between 1 and 150" << endl;
+    // cout << "172.21.104.";
+    // cin >> num;
+    // while (num < 1 || num > 150)
+    // {
+    //     cout << "This number is not between 1 and 150. Please choose another number." << endl;
+    //     cout << "172.21.104.";
+    //     cin >> num;
+    // }
+    
+    // string Using_IP = "172.21.104." + to_string(num);
+    
+    // ComputerConnections<string> GeneratedIP(Using_IP, "IP Generada por el usuario");
+
+    // // date-hour-SourceIP-SourcePort-SourceName-destinationIP-destinationPort-destinationName
 
 
-    for (int i = 0; i < records.size(); i++)
-    {
-        if(records[i].destinationIP == "122.210.219.145")
-        {
-            cout << records[i].destinationName << endl;
-            break;
-        }
-    }
+    // for (int i = 0; i < records.size(); i++)
+    // {
+    //     // The computer connected somewhere
+    //     if(records[i].sourceIP == Using_IP)
+    //     {
+    //         // To which places our computer has connected
+    //         GeneratedIP.addConnectionOUT(records[i].destinationIP);
+    //     }
+    //     // Another computer connected to our IP
+    //     if(records[i].destinationIP == Using_IP)
+    //     {
+    //         // Add the computer IP that connected to our computer
+    //         GeneratedIP.addConnectionIN(records[i].sourceIP);
+    //     }
+    // }
+    // cout << "This computer has connected to " << GeneratedIP.ConOUTSize() << " IPs." << endl;
+    // cout << "This computer was accessed " << GeneratedIP.ConINSize() << " time(s)." << endl;
+    // cout << endl;
+    // cout << "===============================================================================================" << endl;
+    // cout << endl;
+    // cout << "The computer with the IP '172.21.104.99' has connected to many other computers in our network." << endl;
+    // cout << endl;
+    // ComputerConnections<string> PossibleAttack("172.21.104.99", "Possible Attack");
+
+    // for (int i = 0; i < records.size(); i++)
+    // {
+    //     // The computer connected somewhere
+    //     if(records[i].sourceIP == "172.21.104.99")
+    //     {
+    //         // To which places our computer has connected
+    //         PossibleAttack.addConnectionOUT(records[i].destinationIP);
+    //     }
+    //     // Another computer connected to our IP
+    //     if(records[i].destinationIP == "172.21.104.99")
+    //     {
+    //         // Add the computer IP that connected to our computer
+    //         PossibleAttack.addConnectionIN(records[i].sourceIP);
+    //     }
+    // }
+
+
+    // cout << "Its last connection was made to the IP " << PossibleAttack.getConnectionOUT() << endl;
+    // cout << "It was accessed last by " << PossibleAttack.getConnectionIN() << endl;
+    // cout << "It connected to " << PossibleAttack.ConOUTSize() << " IPs" << endl;
+    // cout << "It was accessed " << PossibleAttack.ConINSize() << " time(s)" << endl;
+
+    // string last_connection = "000.000.000.000";
+    // int n = 0;
+    // while (PossibleAttack.ConOUTSize() != 0)
+    // {
+    //     if(PossibleAttack.getConnectionOUT() == last_connection)
+    //     {
+    //         num += 1;
+    //         if (num == 3)
+    //         {
+    //             cout << "It made 3 consequently connections to " << last_connection << endl;
+    //         }            
+    //     }else
+    //     {
+    //         num = 0;
+    //     }
+    //     last_connection = PossibleAttack.getConnectionOUT();
+    //     PossibleAttack.removeConnectionOUT();
+    // }
+    // cout << endl;
+    // cout << "===============================================================================================" << endl;
+
+
+    // for (int i = 0; i < records.size(); i++)
+    // {
+    //     if(records[i].destinationIP == "122.210.219.145")
+    //     {
+    //         cout << records[i].destinationName << endl;
+    //         break;
+    //     }
+    // }
     
     // Bad IPs
     // 122.210.219.145
