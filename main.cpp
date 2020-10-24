@@ -269,6 +269,7 @@ int main()
    // Generate IP
    // IP's that connected to other computers in the network [28,99]
 
+    // Avance Entrega 3
 
     unordered_map< string, ComputerConnections<string> > CCDict;
 
@@ -321,6 +322,41 @@ int main()
 
     }
     
+    
+    unordered_set<string>::iterator bad_page1 = destination_names_set.find("in6u9mmzf2o5dwr8o43l.ru");
+    unordered_set<string>::iterator bad_page2 = destination_names_set.find("gncbrmxpm138gzbscrle.ru");
+
+    string badip1;
+    string badip2;
+
+    for (int i = 0; i < records.size(); i++)
+    {
+        if (records[i].destinationName == "in6u9mmzf2o5dwr8o43l.ru")
+        {
+            badip1 = records[i].destinationIP;
+            break;
+        }
+    }
+    
+    
+    for (int i = 0; i < records.size(); i++)
+    {
+        if (records[i].destinationName == "gncbrmxpm138gzbscrle.ru")
+        {
+            badip2 = records[i].destinationIP;
+            break;
+        }
+    }
+
+    if (bad_page1 != destination_names_set.end())
+    {
+        cout << "Our first supicious page is " << *bad_page1 << " and its ip is " << badip1 << endl;
+    }
+
+    if (bad_page1 != destination_names_set.end())
+    {
+        cout << "Our first supicious page is " << *bad_page2 << " and its ip is " << badip2 << endl;
+    }
     
 
     // cout << endl;
