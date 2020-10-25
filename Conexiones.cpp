@@ -1,6 +1,5 @@
 #include<iostream>
-#include<stack>
-#include<queue>
+#include<list>
 #include<typeinfo>
 
 using namespace std;
@@ -12,8 +11,8 @@ private:
 
     string IP;
     string name;
-    stack<T> ConIN;     // Pila (Last In First Out)
-    queue<T> ConOUT;    // Cola (First In First Out)
+    list<T> ConIN;     // Pila (Last In First Out)
+    list<T> ConOUT;    // Cola (First In First Out)
 public:
 
     ComputerConnections(string IP_, string name_)
@@ -29,7 +28,7 @@ public:
         remembering that this container has a FILO 
         structure (Last In First Out).
         */
-        this->ConIN.push(value);
+        this->ConIN.push_front(value);
     }
 
     T getConnectionIN()
@@ -39,7 +38,7 @@ public:
         */
        if(this->ConINSize() != 0)
        {
-            return this->ConIN.top();
+            return this->ConIN.front();
        }else
        {
            return "There are no elements in the stack";
@@ -52,19 +51,19 @@ public:
         /*
         Remove the frist element in the stack.
         */
-       this->ConIN.pop();
+       this->ConIN.pop_front();
 
     }
 
     void addConnectionOUT(T value)
     {
         /*
-        Add an element to the top of the stack, 
-        remembering that this containter has FIFO
-        structure (First In First Out).
+        Add an element to the top of the queue, 
+        remembering that this containter has LIFO
+        structure (Last In First Out).
         */
 
-        this->ConOUT.push(value);
+        this->ConOUT.push_back(value);
     }
 
     T getConnectionOUT()
@@ -88,7 +87,7 @@ public:
         /*
         Remove the first element from the queue.
         */
-       this->ConOUT.pop();
+       this->ConOUT.pop_front();
     }
 
     int ConINSize()

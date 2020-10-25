@@ -52,193 +52,193 @@ int main()
     string path = "/mnt/c/Users/matug/documents/school/Semestre 3/Reto algoritmo/datos.csv";
     read(path);
 
-    int i = 0;
-    Record first_date = records[0];
-    Record next_date = records[i];
+//     int i = 0;
+//     Record first_date = records[0];
+//     Record next_date = records[i];
 
-    // Primera pregunta: ¿Cuántos registros tiene tu archivo?
-    // cout << "Mi archivo contiene " << records.size() << " registros." << endl;
+//     // Primera pregunta: ¿Cuántos registros tiene tu archivo?
+//     // cout << "Mi archivo contiene " << records.size() << " registros." << endl;
   
-    while (first_date.date == next_date.date)
-    {
-        i++;
-        next_date = records[i];
+//     while (first_date.date == next_date.date)
+//     {
+//         i++;
+//         next_date = records[i];
         
-    }
+//     }
     
-    // Segunda pregunta: ¿Cuántos récords hay en el segundo día registrado? ¿Qué día es este?
-    // cout << "El segundo día en el registro es " << records[i].date << endl;
+//     // Segunda pregunta: ¿Cuántos récords hay en el segundo día registrado? ¿Qué día es este?
+//     // cout << "El segundo día en el registro es " << records[i].date << endl;
 
-    first_date = records[i];
-    next_date = records[i];
+//     first_date = records[i];
+//     next_date = records[i];
 
-    while (first_date.date == next_date.date)
-    {
-        i++;
-        next_date = records[i];
+//     while (first_date.date == next_date.date)
+//     {
+//         i++;
+//         next_date = records[i];
         
-    }
+//     }
 
-    // cout << "El segundo día de mi registro contiene " << i << " récords." << endl;
+//     // cout << "El segundo día de mi registro contiene " << i << " récords." << endl;
 
-    // Pregunta 3
-    vector<string> source_names;
+//     // Pregunta 3
+//     vector<string> source_names;
 
-    Record object;
+//     Record object;
 
-    for (int i = 0; i < records.size(); i++)
-    {
-        object = records[i];
-        source_names.push_back(object.sourceName);
-    }
+//     for (int i = 0; i < records.size(); i++)
+//     {
+//         object = records[i];
+//         source_names.push_back(object.sourceName);
+//     }
     
-    QuickSort<string> hello;
+//     QuickSort<string> hello;
     
-    hello.sort(source_names);
+//     hello.sort(source_names);
     
-    Search<string> search(source_names);
+//     Search<string> search(source_names);
 
-    // ¿Alguna de las computadoras pertenece a Jeffrey, Betty, Katherine, Scott, Benjamin, Samuel o Raymond?
-    string samuel = "samuel.reto.com";
-    string jeffrey = "jeffrey.reto.com";
-    string katherine = "katherine.reto.com";
-    string betty = "betty.reto.com";
-    string benjamin = "benjamin.reto.com";
-    string raymond = "raymond.reto.com";
+//     // ¿Alguna de las computadoras pertenece a Jeffrey, Betty, Katherine, Scott, Benjamin, Samuel o Raymond?
+//     string samuel = "samuel.reto.com";
+//     string jeffrey = "jeffrey.reto.com";
+//     string katherine = "katherine.reto.com";
+//     string betty = "betty.reto.com";
+//     string benjamin = "benjamin.reto.com";
+//     string raymond = "raymond.reto.com";
 
-    if (search.binarySearch(samuel))
-    {
-        // cout << "Una computadora pertenece a Samuel." << endl;
-    }else
-    {
-        // cout << "Ninguna computadora pertenece a Samuel." << endl;
-    }
+//     if (search.binarySearch(samuel))
+//     {
+//         // cout << "Una computadora pertenece a Samuel." << endl;
+//     }else
+//     {
+//         // cout << "Ninguna computadora pertenece a Samuel." << endl;
+//     }
     
     
-    if (search.binarySearch(jeffrey))
-    {
-        // cout << "Una computadora pertenece a Jeffrey." << endl;
-    }else
-    {
-        // cout << "Ninguna computadora pertenece a Jeffrey." << endl;
+//     if (search.binarySearch(jeffrey))
+//     {
+//         // cout << "Una computadora pertenece a Jeffrey." << endl;
+//     }else
+//     {
+//         // cout << "Ninguna computadora pertenece a Jeffrey." << endl;
 
-    }
-    
-
-    if (search.binarySearch(katherine))
-    {
-        // cout << "Una computadora pertenece a Katherine." << endl;
-    }else
-    {
-        // cout << "Ninguna computadora pertenece a Katherine." << endl;
-    }
+//     }
     
 
-    if (search.binarySearch(betty))
-    {
-        // cout << "Una computadora pertenece a Betty." << endl;
-    }else
-    {
-        // cout << "Ninguna computadora pertenece a Betty." << endl;
-    }
+//     if (search.binarySearch(katherine))
+//     {
+//         // cout << "Una computadora pertenece a Katherine." << endl;
+//     }else
+//     {
+//         // cout << "Ninguna computadora pertenece a Katherine." << endl;
+//     }
     
 
-    if (search.binarySearch(benjamin))
-    {
-        // cout << "Una computadora pertenece a Benjamin." << endl;
-    }else
-    {
-        // cout << "Ninguna computadora pertenece a Benjamin." << endl;
-    }
+//     if (search.binarySearch(betty))
+//     {
+//         // cout << "Una computadora pertenece a Betty." << endl;
+//     }else
+//     {
+//         // cout << "Ninguna computadora pertenece a Betty." << endl;
+//     }
     
 
-    if (search.binarySearch(raymond))
-    {
-        // cout << "Una computadora pertenece a Raymond." << endl;
-    }else
-    {
-        // cout << "Ninguna computadora pertenece a Raymond." << endl;
-    }
-    
-    // Pregunta 4
-    
-    vector<string> source_IP;
-
-    for (int i = 0; i < records.size(); i++)
-    {
-        object = records[i];
-        source_IP.push_back(object.sourceIP);
-    }
-
-    hello.sort(source_IP);
-
-    // cout << "La dirección IP interna de la compañia es 172.21.104 seguido de un identificador de la computadora dentro de la red." << endl;
-
-    // for (int i = 1000; i < 1100; i++)
-    // {
-    //     // cout << source_IP[i] << endl;
-    // }
-
-    // Pregunta 5 ¿Alguna computadora se llama server.reto.com?
-
-    if (search.binarySearch("server.reto.com"))
-    {
-        // cout << "Si existe una computadora que se llame server.reto.com." << endl;
-    }else
-    {
-        // cout << "No existe una computadora que se llame server.reto.com." << endl;
-    }
-
-    source_names.clear();
-    
-    // Pregunta 6 ¿Qué servicio de mail utilizan de todos estos: gmail.com, outlook.com, protonmail.com, freemailserver.com?
-
-    vector<string> destination_names;
-
-   for (int i = 0; i < records.size(); i++)
-    {
-        object = records[i];
-        destination_names.push_back(object.destinationName);
-    }
-
-    hello.sort(destination_names);
-
-    Search<string> search_2(destination_names);
+//     if (search.binarySearch(benjamin))
+//     {
+//         // cout << "Una computadora pertenece a Benjamin." << endl;
+//     }else
+//     {
+//         // cout << "Ninguna computadora pertenece a Benjamin." << endl;
+//     }
     
 
-    if (search_2.binarySearch("gmail.com"))
-    {
-        // cout << "Los empleados de la compañia usan gmail.com." << endl;
-    }
+//     if (search.binarySearch(raymond))
+//     {
+//         // cout << "Una computadora pertenece a Raymond." << endl;
+//     }else
+//     {
+//         // cout << "Ninguna computadora pertenece a Raymond." << endl;
+//     }
+    
+//     // Pregunta 4
+    
+//     vector<string> source_IP;
 
-    if (search_2.binarySearch("outlook.com"))
-    {
-        // cout << "Los empleados de la compañia usan outlook.com." << endl;
-    }
+//     for (int i = 0; i < records.size(); i++)
+//     {
+//         object = records[i];
+//         source_IP.push_back(object.sourceIP);
+//     }
 
-    if (search_2.binarySearch("protonmail.com"))
-    {
-        // cout << "Los empleados de la compañia usan protonmail.com." << endl;
-    }
+//     hello.sort(source_IP);
 
-    if (search_2.binarySearch("freemailserver.com"))
-    {
-        // cout << "Los empleados de la compañia usan freemailserver.com." << endl;
-    }
+//     // cout << "La dirección IP interna de la compañia es 172.21.104 seguido de un identificador de la computadora dentro de la red." << endl;
+
+//     // for (int i = 1000; i < 1100; i++)
+//     // {
+//     //     // cout << source_IP[i] << endl;
+//     // }
+
+//     // Pregunta 5 ¿Alguna computadora se llama server.reto.com?
+
+//     if (search.binarySearch("server.reto.com"))
+//     {
+//         // cout << "Si existe una computadora que se llame server.reto.com." << endl;
+//     }else
+//     {
+//         // cout << "No existe una computadora que se llame server.reto.com." << endl;
+//     }
+
+//     source_names.clear();
+    
+//     // Pregunta 6 ¿Qué servicio de mail utilizan de todos estos: gmail.com, outlook.com, protonmail.com, freemailserver.com?
+
+//     vector<string> destination_names;
+
+//    for (int i = 0; i < records.size(); i++)
+//     {
+//         object = records[i];
+//         destination_names.push_back(object.destinationName);
+//     }
+
+//     hello.sort(destination_names);
+
+//     Search<string> search_2(destination_names);
+    
+
+//     if (search_2.binarySearch("gmail.com"))
+//     {
+//         // cout << "Los empleados de la compañia usan gmail.com." << endl;
+//     }
+
+//     if (search_2.binarySearch("outlook.com"))
+//     {
+//         // cout << "Los empleados de la compañia usan outlook.com." << endl;
+//     }
+
+//     if (search_2.binarySearch("protonmail.com"))
+//     {
+//         // cout << "Los empleados de la compañia usan protonmail.com." << endl;
+//     }
+
+//     if (search_2.binarySearch("freemailserver.com"))
+//     {
+//         // cout << "Los empleados de la compañia usan freemailserver.com." << endl;
+//     }
 
 
-    // Pregunta 7 Considerando solamente los puertos destino ¿Qué puertos abajo del 1000 se están usando? Lista los puertos e investiga que aplicación/servicio lo utiliza generalmente.
+//     // Pregunta 7 Considerando solamente los puertos destino ¿Qué puertos abajo del 1000 se están usando? Lista los puertos e investiga que aplicación/servicio lo utiliza generalmente.
 
-    vector<string> destination_ports;
-    //  vector<string> good_ports;
+//     vector<string> destination_ports;
+//     //  vector<string> good_ports;
 
-    for (int i = 0; i < records.size(); i++)
-    {
-        object = records[i];
-        destination_ports.push_back(object.destinationPort);
-    }
+//     for (int i = 0; i < records.size(); i++)
+//     {
+//         object = records[i];
+//         destination_ports.push_back(object.destinationPort);
+//     }
 
-    hello.sort(destination_ports);
+//     hello.sort(destination_ports);
 
     /*
 
@@ -277,86 +277,118 @@ int main()
 
     unordered_set<string> ip;
 
-    for (int i = 0; i < records.size(); i++)
-    {
-        if (records[i].destinationName.find("reto.com") == string::npos && records[i].destinationName.find("-") == string::npos)
-        {
-            destination_names_set.insert(records[i].destinationName);
-        }
-        
-    }
+    unordered_set<string> names;
+
+    unordered_map<string, string> ip_name;
 
     for (int i = 0; i < records.size(); i++)
     {
-        if(records[i].destinationIP.find("-") == string::npos)
-        {
-            ip.insert(records[i].destinationIP);
-        }
-        
-        if(records[i].sourceIP.find("-") == string::npos)
+        if (ip.find(records[i].sourceIP) == ip.end() && names.find(records[i].sourceName) == names.end())
         {
             ip.insert(records[i].sourceIP);
+            names.insert(records[i].sourceName);
+            pair<string, string> ipname(records[i].sourceIP, records[i].sourceName);
+            ip_name.insert(ipname);
+
         }
-    }
-    
-    for (auto i = ip.begin(); i != ip.end(); i++)
-    {
-
-        ComputerConnections<string> IP(*i, *i);
-
-        for (int j = 0; j < records.size(); j++)
+        if (ip.find(records[i].destinationIP) == ip.end() && names.find(records[i].destinationName) == names.end())
         {
-            if (records[j].sourceIP == *i)
-            {
-                IP.addConnectionOUT(records[j].destinationIP);
-            }
-            if (records[j].destinationIP == *i)
-            {
-                IP.addConnectionIN(records[j].sourceIP);
-            }
+            ip.insert(records[i].destinationIP);
+            names.insert(records[i].destinationName);
+            pair<string, string> ipname(records[i].destinationIP, records[i].destinationName);
+            ip_name.insert(ipname);
         }
-
-        pair<string, ComputerConnections<string> > PairIP (*i, IP);
         
-        CCDict.insert(PairIP);
+    }
 
+    for (auto& i : ip_name)
+    {
+        cout << i.first << " : " << i.second << endl;
     }
     
     
-    unordered_set<string>::iterator bad_page1 = destination_names_set.find("in6u9mmzf2o5dwr8o43l.ru");
-    unordered_set<string>::iterator bad_page2 = destination_names_set.find("gncbrmxpm138gzbscrle.ru");
+    
 
-    string badip1;
-    string badip2;
+    // for (int i = 0; i < records.size(); i++)
+    // {
+    //     if (records[i].destinationName.find("reto.com") == string::npos && records[i].destinationName.find("-") == string::npos)
+    //     {
+    //         destination_names_set.insert(records[i].destinationName);
+    //     }
+        
+    // }
 
-    for (int i = 0; i < records.size(); i++)
-    {
-        if (records[i].destinationName == "in6u9mmzf2o5dwr8o43l.ru")
-        {
-            badip1 = records[i].destinationIP;
-            break;
-        }
-    }
+    // for (int i = 0; i < records.size(); i++)
+    // {
+    //     if(records[i].destinationIP.find("-") == string::npos)
+    //     {
+    //         ip.insert(records[i].destinationIP);
+    //     }
+        
+    //     if(records[i].sourceIP.find("-") == string::npos)
+    //     {
+    //         ip.insert(records[i].sourceIP);
+    //     }
+    // }
+    
+    // for (auto i = ip.begin(); i != ip.end(); i++)
+    // {
+
+    //     ComputerConnections<string> IP(*i, *i);
+
+    //     for (int j = 0; j < records.size(); j++)
+    //     {
+    //         if (records[j].sourceIP == *i)
+    //         {
+    //             IP.addConnectionOUT(records[j].destinationIP);
+    //         }
+    //         if (records[j].destinationIP == *i)
+    //         {
+    //             IP.addConnectionIN(records[j].sourceIP);
+    //         }
+    //     }
+
+    //     pair<string, ComputerConnections<string> > PairIP (*i, IP);
+        
+    //     CCDict.insert(PairIP);
+
+    // }
     
     
-    for (int i = 0; i < records.size(); i++)
-    {
-        if (records[i].destinationName == "gncbrmxpm138gzbscrle.ru")
-        {
-            badip2 = records[i].destinationIP;
-            break;
-        }
-    }
+    // unordered_set<string>::iterator bad_page1 = destination_names_set.find("in6u9mmzf2o5dwr8o43l.ru");
+    // unordered_set<string>::iterator bad_page2 = destination_names_set.find("gncbrmxpm138gzbscrle.ru");
 
-    if (bad_page1 != destination_names_set.end())
-    {
-        cout << "Our first supicious page is " << *bad_page1 << " and its ip is " << badip1 << endl;
-    }
+    // string badip1;
+    // string badip2;
 
-    if (bad_page1 != destination_names_set.end())
-    {
-        cout << "Our first supicious page is " << *bad_page2 << " and its ip is " << badip2 << endl;
-    }
+    // for (int i = 0; i < records.size(); i++)
+    // {
+    //     if (records[i].destinationName == "in6u9mmzf2o5dwr8o43l.ru")
+    //     {
+    //         badip1 = records[i].destinationIP;
+    //         break;
+    //     }
+    // }
+    
+    
+    // for (int i = 0; i < records.size(); i++)
+    // {
+    //     if (records[i].destinationName == "gncbrmxpm138gzbscrle.ru")
+    //     {
+    //         badip2 = records[i].destinationIP;
+    //         break;
+    //     }
+    // }
+
+    // if (bad_page1 != destination_names_set.end())
+    // {
+    //     cout << "Our first supicious page is " << *bad_page1 << " and its ip is " << badip1 << endl;
+    // }
+
+    // if (bad_page1 != destination_names_set.end())
+    // {
+    //     cout << "Our first supicious page is " << *bad_page2 << " and its ip is " << badip2 << endl;
+    // }
     
 
     // cout << endl;
