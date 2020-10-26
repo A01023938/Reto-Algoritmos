@@ -301,12 +301,56 @@ int main()
         
     }
 
+    // Computadoras que son parte de la compañia y su nombre contiene "reto.com"
+
+    unordered_map<string, string>  networkComputers;
+
     for (auto& i : ip_name)
     {
-        cout << i.first << " : " << i.second << endl;
+        if (i.second.find("reto.com") != string::npos)
+        {
+            pair<string, string> networkIP(i.first, i.second);
+            networkComputers.insert(networkIP);
+        }
     }
     
+    // Las fechas y el numero de conexiones que tienen registradas
+
+    vector<string> d;
+
+    for (int i = 0; i < records.size(); i++)
+    {
+        d.push_back(records[i].date);
+    }
+
+    QuickSort<string> sort;
+    sort.sort(d);
+
+    unordered_map<string, int> dates;
+    string last_date =  d[0];
+    int numCon = 0;
+
+    for (int i = 0; i < d.size(); i++)
+    {
+        if (d[i] != last_date)
+        {
+            pair<string, int> date(d[i], numCon);
+            dates.insert(date);
+            last_date = d[i];
+            numCon = 0;
+        }else
+        {
+            numCon++;
+        }
+    }
     
+    int size;
+    for(auto& i : dates)
+    {
+        size += i.second; 
+    }
+
+    cout << d.size() << " : " << size << endl;
     
 
     // for (int i = 0; i < records.size(); i++)
