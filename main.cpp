@@ -189,11 +189,78 @@ int main()
        CCDict.insert(PairIP);
    }
    
+    // Imprime el diccionario que contiene el nombre de cada IP y cuantas conexiones entrantes y salientes tiene
+    /*
+
     for (auto& i : CCDict)
     {
         cout << i.first << " Connections In Size: " << i.second.ConINSize() <<  " Connections Out Size: " << i.second.ConOUTSize() << endl;
     }
+
+    */
+
+   // Search by IP or by name
+   
+    bool search;
+    char yes_no;
+
+    cout << "Would you like to search a specific IP? Type 'Y' if yes and 'N' for no." << endl;
+    cin >> yes_no;
     
+    if (yes_no == 'Y' || yes_no == 'y')
+    {
+        cout << "true" << endl;
+        search = true;
+    }else
+    {
+        search = false;
+    }
+
+
+    while (search)
+    {
+        char input;
+
+        cout << "Search by IP(1) or by URL(2)?" << endl;
+        cout << "If you want to exit search please type '0'." << endl;
+        cin >> input;
+
+        if (input == '0')
+        {
+            break;
+        }
+       
+        while ((input != '1') && (input != '2') && (input != '0'))
+        {
+            cout << "This is not a valid input, please type '1' to search by IP or '2' to search by URL." << endl;
+            cin >> input;
+        }
+
+        // Search by IP
+        if (input == '1')
+        {
+            string IP_search;
+
+            cout << "Please type the IP that you would like to investigate." << endl;
+            cin >> IP_search;
+
+            while (IP_search != "exit" && ip_name.find(IP_search) == ip_name.end())
+            {
+                cout << "This IP does not match any IP in our data." << endl;
+                cout << "Please enter another IP or type 'exit' to exit search by IP." << endl;
+                cin >> IP_search;
+            }
+            cout << "this IP exists" << endl;
+            
+
+
+           
+
+        }
+       
+   }
+
+   
 
     // for (int i = 0; i < records.size(); i++)
     // {
@@ -381,11 +448,6 @@ int main()
     // 201.65.34.164 twitter.com
     // 36.160.190.27 microsoft.com
     
-    /*
-    To do list:
-    - Make a dictionary that has the Ip address and an object Computer connections
-    - Investigate bad Ip's
-    */
 
     return 0;
 }
