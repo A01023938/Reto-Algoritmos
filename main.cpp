@@ -200,16 +200,22 @@ int main()
     */
 
    // Search by IP or by name
+   cout << *CCDict["lowes.com"].getConnectionIN() << endl;
+   
+   for (auto& i : ip_name)
+   {
+       cout << i.first << endl;
+   }
    
     bool search;
     char yes_no;
 
     cout << "Would you like to search a specific IP? Type 'Y' if yes and 'N' for no." << endl;
     cin >> yes_no;
+    cout << endl;
     
     if (yes_no == 'Y' || yes_no == 'y')
     {
-        cout << "true" << endl;
         search = true;
     }else
     {
@@ -224,6 +230,7 @@ int main()
         cout << "Search by IP(1) or by URL(2)?" << endl;
         cout << "If you want to exit search please type '0'." << endl;
         cin >> input;
+        cout << endl;
 
         if (input == '0')
         {
@@ -234,6 +241,7 @@ int main()
         {
             cout << "This is not a valid input, please type '1' to search by IP or '2' to search by URL." << endl;
             cin >> input;
+            cout << endl;
         }
 
         // Search by IP
@@ -243,19 +251,51 @@ int main()
 
             cout << "Please type the IP that you would like to investigate." << endl;
             cin >> IP_search;
+            cout << endl;
 
             while (IP_search != "exit" && ip_name.find(IP_search) == ip_name.end())
             {
                 cout << "This IP does not match any IP in our data." << endl;
                 cout << "Please enter another IP or type 'exit' to exit search by IP." << endl;
                 cin >> IP_search;
+                cout << endl;
             }
-            cout << "this IP exists" << endl;
             
+            cout << "Name: " << ip_name[IP_search] << endl;
+            string n = ip_name[IP_search];
+            // cout << "Connections IN: " << CCDict[n].ConINSize() << endl;
+            // cout << "Connections OUT: " << CCDict[n].ConOUTSize() << endl;
+            cout << endl;
 
+        }
+        if (input == '2')
+        {
+            string IP_search;
 
-           
+            cout << "Please type the URL that you would like to investigate." << endl;
+            cin >> IP_search;
+            cout << endl;
 
+            while (IP_search != "exit" && CCDict.find(IP_search) == CCDict.end())
+            {
+                cout << "This URL does not match any URL in our data." << endl;
+                cout << "Please enter another URL or type 'exit' to exit search by IP." << endl;
+                cin >> IP_search;
+                cout << endl;
+            }
+            
+            for (auto& i : ip_name)
+            {
+                if (i.second == IP_search)
+                {
+                    cout << "IP: " << i.first << endl;
+                    break;
+                }
+            }
+            
+            // cout << CCDict[IP_search] << endl;
+            // cout << "Connections IN: " << CCDict[IP_search].ConINSize() << endl;
+            cout << endl;
         }
        
    }
