@@ -15,6 +15,8 @@ private:
     list<T> ConOUT;    // Cola (First In First Out)
 public:
 
+    ComputerConnections(){}
+
     ComputerConnections(string IP_, string name_)
     {
         this->IP = IP_;

@@ -147,21 +147,21 @@ int main()
     
     // Conjunto de computadoras que no pertenzcan a dominio.reto.com
 
-    unordered_map<string, string> destination_names_set;
+    unordered_map<string, string> destination_names_map;
 
     for (auto& i : ip_name)
     {
         if (i.second.find("reto.com") == string::npos)
         {
             pair<string, string> destinationNames(i.first, i.second);
-            destination_names_set.insert(destinationNames);
+            destination_names_map.insert(destinationNames);
         }
         
     }
     // Print destination names and their IP's
     /*
 
-    for (auto& i : destination_names_set)
+    for (auto& i : destination_names_map)
     {
         cout << i.first << "  ->  " << i.second << endl;
     }
@@ -199,13 +199,8 @@ int main()
 
     */
 
-   // Search by IP or by name
-   cout << *CCDict["lowes.com"].getConnectionIN() << endl;
-   
-   for (auto& i : ip_name)
-   {
-       cout << i.first << endl;
-   }
+   // Search by IP or by name 
+//    cout << CCDict["lowes.com"].ConINSize() << endl;
    
     bool search;
     char yes_no;
@@ -262,9 +257,9 @@ int main()
             }
             
             cout << "Name: " << ip_name[IP_search] << endl;
-            string n = ip_name[IP_search];
-            // cout << "Connections IN: " << CCDict[n].ConINSize() << endl;
-            // cout << "Connections OUT: " << CCDict[n].ConOUTSize() << endl;
+            cout << "Connections IN: " << CCDict[ip_name[IP_search]].ConINSize() << endl;
+            cout << "Connections OUT: " << CCDict[ip_name[IP_search]].ConOUTSize() << endl;
+
             cout << endl;
 
         }
@@ -293,201 +288,50 @@ int main()
                 }
             }
             
-            // cout << CCDict[IP_search] << endl;
-            // cout << "Connections IN: " << CCDict[IP_search].ConINSize() << endl;
+            for (auto& i : CCDict)
+            {
+                if (i.first == IP_search)
+                {
+                    cout << "Connections IN: " << i.second.ConINSize() << endl;
+                    cout << "Connections OUT: " << i.second.ConOUTSize() << endl;
+                }
+            }
             cout << endl;
         }
        
    }
 
+
+
+    int numComputersAccessed = 0;
+
+    for (auto& i : networkComputers)
+    {
+        if (CCDict[i.first].ConINSize() > 0)
+        {
+            numComputersAccessed++;
+        }
+    }
+
+    cout << "Number of computers from the network accessed: " << numComputersAccessed << endl;
    
 
-    // for (int i = 0; i < records.size(); i++)
-    // {
-    //     if (records[i].destinationName.find("reto.com") == string::npos && records[i].destinationName.find("-") == string::npos)
-    //     {
-    //         destination_names_set.insert(records[i].destinationName);
-    //     }
-        
-    // }
-
-    // for (int i = 0; i < records.size(); i++)
-    // {
-    //     if(records[i].destinationIP.find("-") == string::npos)
-    //     {
-    //         ip.insert(records[i].destinationIP);
-    //     }
-        
-    //     if(records[i].sourceIP.find("-") == string::npos)
-    //     {
-    //         ip.insert(records[i].sourceIP);
-    //     }
-    // }
-    
-    // for (auto i = ip.begin(); i != ip.end(); i++)
-    // {
-
-    //     ComputerConnections<string> IP(*i, *i);
-
-    //     for (int j = 0; j < records.size(); j++)
-    //     {
-    //         if (records[j].sourceIP == *i)
-    //         {
-    //             IP.addConnectionOUT(records[j].destinationIP);
-    //         }
-    //         if (records[j].destinationIP == *i)
-    //         {
-    //             IP.addConnectionIN(records[j].sourceIP);
-    //         }
-    //     }
-
-    //     pair<string, ComputerConnections<string> > PairIP (*i, IP);
-        
-    //     CCDict.insert(PairIP);
-
-    // }
-    
-    
-    // unordered_set<string>::iterator bad_page1 = destination_names_set.find("in6u9mmzf2o5dwr8o43l.ru");
-    // unordered_set<string>::iterator bad_page2 = destination_names_set.find("gncbrmxpm138gzbscrle.ru");
-
-    // string badip1;
-    // string badip2;
-
-    // for (int i = 0; i < records.size(); i++)
-    // {
-    //     if (records[i].destinationName == "in6u9mmzf2o5dwr8o43l.ru")
-    //     {
-    //         badip1 = records[i].destinationIP;
-    //         break;
-    //     }
-    // }
-    
-    
-    // for (int i = 0; i < records.size(); i++)
-    // {
-    //     if (records[i].destinationName == "gncbrmxpm138gzbscrle.ru")
-    //     {
-    //         badip2 = records[i].destinationIP;
-    //         break;
-    //     }
-    // }
-
-    // if (bad_page1 != destination_names_set.end())
-    // {
-    //     cout << "Our first supicious page is " << *bad_page1 << " and its ip is " << badip1 << endl;
-    // }
-
-    // if (bad_page1 != destination_names_set.end())
-    // {
-    //     cout << "Our first supicious page is " << *bad_page2 << " and its ip is " << badip2 << endl;
-    // }
-    
-
-    // cout << endl;
-    // int num;
-    // cout << "Please choose a computer to examine. Remember that the computer ID must be between 1 and 150" << endl;
-    // cout << "172.21.104.";
-    // cin >> num;
-    // while (num < 1 || num > 150)
-    // {
-    //     cout << "This number is not between 1 and 150. Please choose another number." << endl;
-    //     cout << "172.21.104.";
-    //     cin >> num;
-    // }
-    
-    // string Using_IP = "172.21.104." + to_string(num);
-    
-    // ComputerConnections<string> GeneratedIP(Using_IP, "IP Generada por el usuario");
-
-    // // date-hour-SourceIP-SourcePort-SourceName-destinationIP-destinationPort-destinationName
+//    for (auto& i : destination_names_map)
+//    {
+//        unordered_set<string> unique_connectionsIN;
+//        while (CCDict[i.second].ConINSize())
+//        {
+//            unique_connectionsIN.insert(CCDict[i.second].getConnectionIN());
+//            CCDict[i.second].removeConnectionIN();
+//        }
+       
+//        for (auto i = unique_connectionsIN.begin(); i != unique_connectionsIN.end(); i++)
+//        {
+//            cout << *i << endl;
+//        }
+//    } 
 
 
-    // for (int i = 0; i < records.size(); i++)
-    // {
-    //     // The computer connected somewhere
-    //     if(records[i].sourceIP == Using_IP)
-    //     {
-    //         // To which places our computer has connected
-    //         GeneratedIP.addConnectionOUT(records[i].destinationIP);
-    //     }
-    //     // Another computer connected to our IP
-    //     if(records[i].destinationIP == Using_IP)
-    //     {
-    //         // Add the computer IP that connected to our computer
-    //         GeneratedIP.addConnectionIN(records[i].sourceIP);
-    //     }
-    // }
-    // cout << "This computer has connected to " << GeneratedIP.ConOUTSize() << " IPs." << endl;
-    // cout << "This computer was accessed " << GeneratedIP.ConINSize() << " time(s)." << endl;
-    // cout << endl;
-    // cout << "===============================================================================================" << endl;
-    // cout << endl;
-    // cout << "The computer with the IP '172.21.104.99' has connected to many other computers in our network." << endl;
-    // cout << endl;
-    // ComputerConnections<string> PossibleAttack("172.21.104.99", "Possible Attack");
-
-    // for (int i = 0; i < records.size(); i++)
-    // {
-    //     // The computer connected somewhere
-    //     if(records[i].sourceIP == "172.21.104.99")
-    //     {
-    //         // To which places our computer has connected
-    //         PossibleAttack.addConnectionOUT(records[i].destinationIP);
-    //     }
-    //     // Another computer connected to our IP
-    //     if(records[i].destinationIP == "172.21.104.99")
-    //     {
-    //         // Add the computer IP that connected to our computer
-    //         PossibleAttack.addConnectionIN(records[i].sourceIP);
-    //     }
-    // }
-
-
-    // cout << "Its last connection was made to the IP " << PossibleAttack.getConnectionOUT() << endl;
-    // cout << "It was accessed last by " << PossibleAttack.getConnectionIN() << endl;
-    // cout << "It connected to " << PossibleAttack.ConOUTSize() << " IPs" << endl;
-    // cout << "It was accessed " << PossibleAttack.ConINSize() << " time(s)" << endl;
-
-    // string last_connection = "000.000.000.000";
-    // int n = 0;
-    // while (PossibleAttack.ConOUTSize() != 0)
-    // {
-    //     if(PossibleAttack.getConnectionOUT() == last_connection)
-    //     {
-    //         num += 1;
-    //         if (num == 3)
-    //         {
-    //             cout << "It made 3 consequently connections to " << last_connection << endl;
-    //         }            
-    //     }else
-    //     {
-    //         num = 0;
-    //     }
-    //     last_connection = PossibleAttack.getConnectionOUT();
-    //     PossibleAttack.removeConnectionOUT();
-    // }
-    // cout << endl;
-    // cout << "===============================================================================================" << endl;
-
-
-    // for (int i = 0; i < records.size(); i++)
-    // {
-    //     if(records[i].destinationIP == "122.210.219.145")
-    //     {
-    //         cout << records[i].destinationName << endl;
-    //         break;
-    //     }
-    // }
-    
-    // Bad IPs
-    // 122.210.219.145
-    
-    // Good IPs
-    // 161.229.35.160 gmail.com
-    // 201.65.34.164 twitter.com
-    // 36.160.190.27 microsoft.com
-    
 
     return 0;
 }
