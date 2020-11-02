@@ -1,15 +1,15 @@
-#include<iostream>
-#include<fstream>
-#include<sstream>
-#include<vector>
-#include<string>
-#include<algorithm>
-#include<unordered_map>
-#include<unordered_set>
-#include"read.cpp"
-#include"sort.cpp"
-#include"search.cpp"
-#include"Conexiones.cpp"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <unordered_map>
+#include <unordered_set>
+#include "read.cpp"
+#include "sort.cpp"
+#include "search.cpp"
+#include "Conexiones.cpp"
 
 using namespace std;
 
@@ -21,13 +21,13 @@ void read(string path)
     fileIn.open(path);
     string line, parts;
     vector<string> values;
-    while(fileIn.good())
+    while (fileIn.good())
     {
         getline(fileIn, line);
-        
+
         istringstream sIn(line); // Stirng de entrda
         int i = 0;
-        while(getline(sIn, parts, ','))
+        while (getline(sIn, parts, ','))
         {
             values.push_back(parts);
         }
@@ -38,12 +38,11 @@ void read(string path)
         }
 
         Record register_(values[0], values[1], values[2], values[3], values[4], values[5], values[6], values[7]);
-    
-        records.push_back(register_);
-        
-        values.clear();        
-    }
 
+        records.push_back(register_);
+
+        values.clear();
+    }
 };
 int main()
 {
@@ -68,7 +67,6 @@ int main()
             names.insert(records[i].sourceName);
             pair<string, string> ipname(records[i].sourceIP, records[i].sourceName);
             ip_name.insert(ipname);
-
         }
         if (ip.find(records[i].destinationIP) == ip.end() && names.find(records[i].destinationName) == names.end())
         {
@@ -77,14 +75,13 @@ int main()
             pair<string, string> ipname(records[i].destinationIP, records[i].destinationName);
             ip_name.insert(ipname);
         }
-        
     }
 
     // Computadoras que son parte de la compañia y su nombre contiene "reto.com"
 
-    unordered_map<string, string>  networkComputers;
+    unordered_map<string, string> networkComputers;
 
-    for (auto& i : ip_name)
+    for (auto &i : ip_name)
     {
         if (i.second.find("reto.com") != string::npos)
         {
@@ -92,7 +89,7 @@ int main()
             networkComputers.insert(networkIP);
         }
     }
-    
+
     // Las fechas y el numero de conexiones que tienen registradas
 
     vector<string> d;
@@ -106,7 +103,7 @@ int main()
     sort.sort(d);
 
     unordered_map<string, int> dates;
-    string last_date =  d[0];
+    string last_date = d[0];
     int numCon = 0;
 
     for (int i = 0; i < d.size(); i++)
@@ -117,12 +114,13 @@ int main()
             dates.insert(date);
             last_date = d[i];
             numCon = 0;
-        }else
+        }
+        else
         {
             numCon++;
         }
     }
-    
+
     // Print comparison between the number of dates and the number of records
     /*
 
@@ -134,7 +132,7 @@ int main()
     cout << records.size() << " : " << size << endl;
 
     */
-    
+
     // Puertos de destino
 
     unordered_set<string> destinationPorts;
@@ -143,20 +141,18 @@ int main()
     {
         destinationPorts.insert(records[i].destinationPort);
     }
-    
-    
+
     // Conjunto de computadoras que no pertenzcan a dominio.reto.com
 
     unordered_map<string, string> destination_names_map;
 
-    for (auto& i : ip_name)
+    for (auto &i : ip_name)
     {
         if (i.second.find("reto.com") == string::npos)
         {
             pair<string, string> destinationNames(i.first, i.second);
             destination_names_map.insert(destinationNames);
         }
-        
     }
     // Print destination names and their IP's
     /*
@@ -168,15 +164,15 @@ int main()
     
     */
 
-   unordered_map< string, ComputerConnections<string> > CCDict;
+    unordered_map<string, ComputerConnections<string>> CCDict;
 
-   for (auto& i : ip_name)
-   {
-       ComputerConnections<string> IP(i.first, i.second);
+    for (auto &i : ip_name)
+    {
+        ComputerConnections<string> IP(i.first, i.second);
 
-       for (int j = 0; j < records.size(); j++)
-       {
-           if (records[j].sourceIP == i.first)
+        for (int j = 0; j < records.size(); j++)
+        {
+            if (records[j].sourceIP == i.first)
             {
                 IP.addConnectionOUT(records[j].destinationIP);
             }
@@ -184,11 +180,11 @@ int main()
             {
                 IP.addConnectionIN(records[j].sourceIP);
             }
-       }
-       pair<string, ComputerConnections<string> > PairIP (i.second, IP);
-       CCDict.insert(PairIP);
-   }
-   
+        }
+        pair<string, ComputerConnections<string>> PairIP(i.second, IP);
+        CCDict.insert(PairIP);
+    }
+
     // Imprime el diccionario que contiene el nombre de cada IP y cuantas conexiones entrantes y salientes tiene
     /*
 
@@ -199,24 +195,23 @@ int main()
 
     */
 
-   // Search by IP or by name 
-//    cout << CCDict["lowes.com"].ConINSize() << endl;
-   
+    // Search by IP or by name
+
     bool search;
     char yes_no;
 
     cout << "Would you like to search a specific IP? Type 'Y' if yes and 'N' for no." << endl;
     cin >> yes_no;
     cout << endl;
-    
+
     if (yes_no == 'Y' || yes_no == 'y')
     {
         search = true;
-    }else
+    }
+    else
     {
         search = false;
     }
-
 
     while (search)
     {
@@ -231,7 +226,7 @@ int main()
         {
             break;
         }
-       
+
         while ((input != '1') && (input != '2') && (input != '0'))
         {
             cout << "This is not a valid input, please type '1' to search by IP or '2' to search by URL." << endl;
@@ -255,13 +250,23 @@ int main()
                 cin >> IP_search;
                 cout << endl;
             }
-            
+
             cout << "Name: " << ip_name[IP_search] << endl;
             cout << "Connections IN: " << CCDict[ip_name[IP_search]].ConINSize() << endl;
             cout << "Connections OUT: " << CCDict[ip_name[IP_search]].ConOUTSize() << endl;
+            
+            if (ip_name[IP_search].find("reto.com") != string::npos)
+            {
+                cout << "This computer belongs to the 'reto.com' network. " << endl;
+
+                if (CCDict[ip_name[IP_search]].ConINSize() > 0)
+                {
+                    cout << "Danger!" << endl;
+                    cout << "This computer was accessed on " << "---date---" << " by " << "---name---." << endl;
+                }
+            }
 
             cout << endl;
-
         }
         if (input == '2')
         {
@@ -278,8 +283,8 @@ int main()
                 cin >> IP_search;
                 cout << endl;
             }
-            
-            for (auto& i : ip_name)
+
+            for (auto &i : ip_name)
             {
                 if (i.second == IP_search)
                 {
@@ -287,8 +292,8 @@ int main()
                     break;
                 }
             }
-            
-            for (auto& i : CCDict)
+
+            for (auto &i : CCDict)
             {
                 if (i.first == IP_search)
                 {
@@ -296,42 +301,36 @@ int main()
                     cout << "Connections OUT: " << i.second.ConOUTSize() << endl;
                 }
             }
+
+            if (IP_search.find("reto.com") != string::npos)
+            {
+                cout << endl;
+                cout << "This computer belongs to the 'reto.com' network." << endl;
+                
+                if (CCDict[IP_search].ConINSize() > 0)
+                {
+                    cout << "Danger!" << endl;
+                    cout << "This computer was accessed on " << "--date--" << " by " << "--name--" << endl;
+                }
+            }
+            
             cout << endl;
-        }
-       
-   }
-
-
-
-    int numComputersAccessed = 0;
-
-    for (auto& i : networkComputers)
-    {
-        if (CCDict[i.first].ConINSize() > 0)
-        {
-            numComputersAccessed++;
         }
     }
 
-    cout << "Number of computers from the network accessed: " << numComputersAccessed << endl;
-   
+    int unique_connections = 0;
 
-//    for (auto& i : destination_names_map)
-//    {
-//        unordered_set<string> unique_connectionsIN;
-//        while (CCDict[i.second].ConINSize())
-//        {
-//            unique_connectionsIN.insert(CCDict[i.second].getConnectionIN());
-//            CCDict[i.second].removeConnectionIN();
-//        }
-       
-//        for (auto i = unique_connectionsIN.begin(); i != unique_connectionsIN.end(); i++)
-//        {
-//            cout << *i << endl;
-//        }
-//    } 
+    for (auto& i : networkComputers)
+    {
+        if (CCDict[i.second].ConINSize() > 0)
+        {
+            unique_connections++;
+        }
+    }
 
-
+    cout << "Of the computers in the network, " << unique_connections << " of " << networkComputers.size() << " have been accessed. " << endl;
+    cout << endl;
+    
 
     return 0;
 }
