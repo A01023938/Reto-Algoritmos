@@ -47,7 +47,7 @@ void read(string path)
 
 string FindFirstConnection(string IP_destination, string IP_source, vector<Record> records = records)
 {
-    string date;
+    string date = "--no date--";
     
     for (int i = 0; i < records.size(); i++)
     {
@@ -278,7 +278,13 @@ int main()
                 if (CCDict[ip_name[IP_search]].ConINSize() > 0)
                 {
                     cout << "Danger!" << endl;
-                    cout << "This computer was accessed on " << "---date---" << " by " << "---name---." << endl;
+                    while (CCDict[ip_name[IP_search]].ConINSize() != 0)
+                    {
+                        cout << "Recieved a connection from " << CCDict[ip_name[IP_search]].getConnectionIN() << " on " << FindFirstConnection("172.21.104.99", CCDict[ip_name[IP_search]].getConnectionIN()) << endl;
+                        CCDict[ip_name[IP_search]].removeConnectionIN();
+                        
+                    }
+                    
                 }
             }
 
@@ -340,13 +346,20 @@ int main()
     {
         if (CCDict[i.second].ConINSize() > 0)
         {
+            cout << "Name: " << i.second << endl;
+            cout << "IP: " << i.first << endl;
+            while (CCDict[i.second].ConINSize() != 0)
+            {
+                cout << "Recieved a connection from " << CCDict[i.second].getConnectionIN() << " at " << FindFirstConnection(i.first, CCDict[i.second].getConnectionIN()) << endl;
+                CCDict[i.second].removeConnectionIN();
+            }
+            cout << endl;
             unique_connections++;
         }
     }
 
     cout << "Of the computers in the network, " << unique_connections << " of " << networkComputers.size() << " have been accessed. " << endl;
     cout << endl;
-    
 
     return 0;
 }
