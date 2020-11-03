@@ -44,6 +44,21 @@ void read(string path)
         values.clear();
     }
 };
+
+string FindFirstConnection(string IP_destination, string IP_source, vector<Record> records = records)
+{
+    string date;
+    
+    for (int i = 0; i < records.size(); i++)
+    {
+        if (records[i].sourceIP == IP_source && records[i].destinationIP == IP_destination)
+        {
+            date = records[i].date;
+        }
+    }
+    return date;
+};
+
 int main()
 {
     // Vector de records
@@ -194,6 +209,7 @@ int main()
     }
 
     */
+    
 
     // Search by IP or by name
 
