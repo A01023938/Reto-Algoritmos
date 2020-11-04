@@ -48,7 +48,7 @@ void read(string path)
 string FindFirstConnection(string IP_destination, string IP_source, vector<Record> records = records)
 {
     string date = "--no date--";
-    
+
     for (int i = 0; i < records.size(); i++)
     {
         if (records[i].sourceIP == IP_source && records[i].destinationIP == IP_destination)
@@ -209,10 +209,10 @@ int main()
     }
 
     */
-    
 
     // Search by IP or by name
 
+    /*
     bool search;
     char yes_no;
 
@@ -270,7 +270,7 @@ int main()
             cout << "Name: " << ip_name[IP_search] << endl;
             cout << "Connections IN: " << CCDict[ip_name[IP_search]].ConINSize() << endl;
             cout << "Connections OUT: " << CCDict[ip_name[IP_search]].ConOUTSize() << endl;
-            
+
             if (ip_name[IP_search].find("reto.com") != string::npos)
             {
                 cout << "This computer belongs to the 'reto.com' network. " << endl;
@@ -282,9 +282,38 @@ int main()
                     {
                         cout << "Recieved a connection from " << CCDict[ip_name[IP_search]].getConnectionIN() << " on " << FindFirstConnection("172.21.104.99", CCDict[ip_name[IP_search]].getConnectionIN()) << endl;
                         CCDict[ip_name[IP_search]].removeConnectionIN();
-                        
                     }
-                    
+                }
+            }
+            else
+            {
+                string checkConnections;
+
+                cout << endl;
+                cout << "Would you like to check the connections IN and OUT of this IP? (Y/N)" << endl;
+                cin >> checkConnections;
+
+                if (checkConnections == "y" || checkConnections == "Y")
+                {
+                    cout << "Which connectios would you like to check (I)N or (O)UT?" << endl;
+                    cin >> checkConnections;
+
+                    if (checkConnections == "I" || checkConnections == "i")
+                    {
+                        while (CCDict[ip_name[IP_search]].ConINSize() > 0)
+                        {
+                            cout << "Recieved a connection from IP: " << CCDict[ip_name[IP_search]].getConnectionIN() << " Name: " << ip_name[CCDict[ip_name[IP_search]].getConnectionIN()] << endl;
+                            CCDict[ip_name[IP_search]].removeConnectionIN();
+                        }
+                    }
+                    if (checkConnections == "O" || checkConnections == "o")
+                    {
+                        while (CCDict[ip_name[IP_search]].ConOUTSize() > 0)
+                        {
+                            cout << "Recieved a connection from " << CCDict[ip_name[IP_search]].getConnectionOUT() << endl;
+                            CCDict[ip_name[IP_search]].removeConnectionOUT();
+                        }
+                    }
                 }
             }
 
@@ -306,7 +335,7 @@ int main()
                 cout << endl;
             }
 
-            for (auto &i : ip_name)
+            for (auto& i : ip_name)
             {
                 if (i.second == IP_search)
                 {
@@ -326,23 +355,51 @@ int main()
 
             if (IP_search.find("reto.com") != string::npos)
             {
-                cout << endl;
-                cout << "This computer belongs to the 'reto.com' network." << endl;
-                
+                cout << "This computer belongs to the 'reto.com' network. " << endl;
+
                 if (CCDict[IP_search].ConINSize() > 0)
                 {
                     cout << "Danger!" << endl;
-                    cout << "This computer was accessed on " << "--date--" << " by " << "--name--" << endl;
+                    while (CCDict[IP_search].ConINSize() != 0)
+                    {
+                        cout << "Recieved a connection from " << CCDict[IP_search].getConnectionIN() << " on " << FindFirstConnection("172.21.104.99", CCDict[IP_search].getConnectionIN()) << endl;
+                        CCDict[IP_search].removeConnectionIN();
+                    }
                 }
             }
-            
+
             cout << endl;
         }
     }
 
-    int unique_connections = 0;
+    */
 
-    for (auto& i : networkComputers)
+    // Avance 3
+
+    // IP Anomalos
+
+    // IP: 122.210.219.145
+    // Name: in6u9mmzf2o5dwr8o43l.ru
+
+    // IP: 178.62.64.51  
+    // Name: gncbrmxpm138gzbscrle.ru
+
+    // Del los nombres de dominio encontrados en el paso anterior, ¿cuál es su ip? ¿Cómo determinarías esta información de la manera más optima en complejidad temporal?
+
+    for (auto& i : ip_name)
+    {
+        if (i.second == "in6u9mmzf2o5dwr8o43l.ru" || i.second == "gncbrmxpm138gzbscrle.ru")
+        {
+            cout << "Name: " << i.second << endl;
+            cout << "IP: " << i.first << endl;
+        }
+    }
+
+    int unique_connections = 0;
+    int badCon1 = 0;
+    int badCon2 = 0;
+
+    for (auto &i : networkComputers)
     {
         if (CCDict[i.second].ConINSize() > 0)
         {
@@ -356,10 +413,40 @@ int main()
             cout << endl;
             unique_connections++;
         }
+        if (CCDict[i.second].ConOUTSize() > 0)
+        {
+            while (CCDict[i.second].ConOUTSize() != 0)
+            {
+                if (CCDict[i.second].getConnectionOUT() == "122.210.219.145")
+                {
+                    badCon1++;
+                }
+                if (CCDict[i.second].getConnectionOUT() == "178.62.64.51")
+                {
+                    badCon2++;
+                }
+                CCDict[i.second].removeConnectionOUT();
+            }
+            cout << "This computer connected to in6u9mmzf2o5dwr8o43l.ru " << badCon1 << " times." << endl;
+            cout << "This computer connected to gncbrmxpm138gzbscrle.ru " << badCon2 << " times." << endl;
+            cout << endl;
+        }
     }
 
     cout << "Of the computers in the network, " << unique_connections << " of " << networkComputers.size() << " have been accessed. " << endl;
     cout << endl;
+
+    /*
+
+    Considerando el resultado de las preguntas 3 y 4, ¿Qué crees que este ocurriendo en esta red?
+
+    La computadora carol.reto.com fue infectada y se conecto a todas las demas otras computadoras. 
+
+    */
+
+
+
+    
 
     return 0;
 }
