@@ -8,8 +8,8 @@
 #include <unordered_set>
 #include "read.cpp"
 #include "sort.cpp"
-#include "search.cpp"
 #include "Conexiones.cpp"
+// #include "IPSearch.cpp"
 
 using namespace std;
 
@@ -136,18 +136,6 @@ int main()
         }
     }
 
-    // Print comparison between the number of dates and the number of records
-    /*
-
-    int size = 0;
-    for(auto& i : dates)
-    {
-        size += i.second; 
-    }
-    cout << records.size() << " : " << size << endl;
-
-    */
-
     // Puertos de destino
 
     unordered_set<string> destinationPorts;
@@ -169,15 +157,9 @@ int main()
             destination_names_map.insert(destinationNames);
         }
     }
-    // Print destination names and their IP's
-    /*
 
-    for (auto& i : destination_names_map)
-    {
-        cout << i.first << "  ->  " << i.second << endl;
-    }
-    
-    */
+
+    // Every name and their connections
 
     unordered_map<string, ComputerConnections<string>> CCDict;
 
@@ -200,183 +182,11 @@ int main()
         CCDict.insert(PairIP);
     }
 
-    // Imprime el diccionario que contiene el nombre de cada IP y cuantas conexiones entrantes y salientes tiene
-    /*
-
-    for (auto& i : CCDict)
-    {
-        cout << i.first << " Connections In Size: " << i.second.ConINSize() <<  " Connections Out Size: " << i.second.ConOUTSize() << endl;
-    }
-
-    */
-
-    // Search by IP or by name
-
-    /*
-    bool search;
-    char yes_no;
-
-    cout << "Would you like to search a specific IP? Type 'Y' if yes and 'N' for no." << endl;
-    cin >> yes_no;
-    cout << endl;
-
-    if (yes_no == 'Y' || yes_no == 'y')
-    {
-        search = true;
-    }
-    else
-    {
-        search = false;
-    }
-
-    while (search)
-    {
-        char input;
-
-        cout << "Search by IP(1) or by URL(2)?" << endl;
-        cout << "If you want to exit search please type '0'." << endl;
-        cin >> input;
-        cout << endl;
-
-        if (input == '0')
-        {
-            break;
-        }
-
-        while ((input != '1') && (input != '2') && (input != '0'))
-        {
-            cout << "This is not a valid input, please type '1' to search by IP or '2' to search by URL." << endl;
-            cin >> input;
-            cout << endl;
-        }
-
-        // Search by IP
-        if (input == '1')
-        {
-            string IP_search;
-
-            cout << "Please type the IP that you would like to investigate." << endl;
-            cin >> IP_search;
-            cout << endl;
-
-            while (IP_search != "exit" && ip_name.find(IP_search) == ip_name.end())
-            {
-                cout << "This IP does not match any IP in our data." << endl;
-                cout << "Please enter another IP or type 'exit' to exit search by IP." << endl;
-                cin >> IP_search;
-                cout << endl;
-            }
-
-            cout << "Name: " << ip_name[IP_search] << endl;
-            cout << "Connections IN: " << CCDict[ip_name[IP_search]].ConINSize() << endl;
-            cout << "Connections OUT: " << CCDict[ip_name[IP_search]].ConOUTSize() << endl;
-
-            if (ip_name[IP_search].find("reto.com") != string::npos)
-            {
-                cout << "This computer belongs to the 'reto.com' network. " << endl;
-
-                if (CCDict[ip_name[IP_search]].ConINSize() > 0)
-                {
-                    cout << "Danger!" << endl;
-                    while (CCDict[ip_name[IP_search]].ConINSize() != 0)
-                    {
-                        cout << "Recieved a connection from " << CCDict[ip_name[IP_search]].getConnectionIN() << " on " << FindFirstConnection("172.21.104.99", CCDict[ip_name[IP_search]].getConnectionIN()) << endl;
-                        CCDict[ip_name[IP_search]].removeConnectionIN();
-                    }
-                }
-            }
-            else
-            {
-                string checkConnections;
-
-                cout << endl;
-                cout << "Would you like to check the connections IN and OUT of this IP? (Y/N)" << endl;
-                cin >> checkConnections;
-
-                if (checkConnections == "y" || checkConnections == "Y")
-                {
-                    cout << "Which connectios would you like to check (I)N or (O)UT?" << endl;
-                    cin >> checkConnections;
-
-                    if (checkConnections == "I" || checkConnections == "i")
-                    {
-                        while (CCDict[ip_name[IP_search]].ConINSize() > 0)
-                        {
-                            cout << "Recieved a connection from IP: " << CCDict[ip_name[IP_search]].getConnectionIN() << " Name: " << ip_name[CCDict[ip_name[IP_search]].getConnectionIN()] << endl;
-                            CCDict[ip_name[IP_search]].removeConnectionIN();
-                        }
-                    }
-                    if (checkConnections == "O" || checkConnections == "o")
-                    {
-                        while (CCDict[ip_name[IP_search]].ConOUTSize() > 0)
-                        {
-                            cout << "Recieved a connection from " << CCDict[ip_name[IP_search]].getConnectionOUT() << endl;
-                            CCDict[ip_name[IP_search]].removeConnectionOUT();
-                        }
-                    }
-                }
-            }
-
-            cout << endl;
-        }
-        if (input == '2')
-        {
-            string IP_search;
-
-            cout << "Please type the URL that you would like to investigate." << endl;
-            cin >> IP_search;
-            cout << endl;
-
-            while (IP_search != "exit" && CCDict.find(IP_search) == CCDict.end())
-            {
-                cout << "This URL does not match any URL in our data." << endl;
-                cout << "Please enter another URL or type 'exit' to exit search by IP." << endl;
-                cin >> IP_search;
-                cout << endl;
-            }
-
-            for (auto& i : ip_name)
-            {
-                if (i.second == IP_search)
-                {
-                    cout << "IP: " << i.first << endl;
-                    break;
-                }
-            }
-
-            for (auto &i : CCDict)
-            {
-                if (i.first == IP_search)
-                {
-                    cout << "Connections IN: " << i.second.ConINSize() << endl;
-                    cout << "Connections OUT: " << i.second.ConOUTSize() << endl;
-                }
-            }
-
-            if (IP_search.find("reto.com") != string::npos)
-            {
-                cout << "This computer belongs to the 'reto.com' network. " << endl;
-
-                if (CCDict[IP_search].ConINSize() > 0)
-                {
-                    cout << "Danger!" << endl;
-                    while (CCDict[IP_search].ConINSize() != 0)
-                    {
-                        cout << "Recieved a connection from " << CCDict[IP_search].getConnectionIN() << " on " << FindFirstConnection("172.21.104.99", CCDict[IP_search].getConnectionIN()) << endl;
-                        CCDict[IP_search].removeConnectionIN();
-                    }
-                }
-            }
-
-            cout << endl;
-        }
-    }
-
-    */
-
     // Avance 3
 
     // IP Anomalos
+    cout << "---- Nombres Anomalos ----" << endl;
+    cout << endl;
 
     // IP: 122.210.219.145
     // Name: in6u9mmzf2o5dwr8o43l.ru
@@ -384,6 +194,7 @@ int main()
     // IP: 178.62.64.51  
     // Name: gncbrmxpm138gzbscrle.ru
 
+    
     // Del los nombres de dominio encontrados en el paso anterior, ¿cuál es su ip? ¿Cómo determinarías esta información de la manera más optima en complejidad temporal?
 
     for (auto& i : ip_name)
@@ -392,60 +203,77 @@ int main()
         {
             cout << "Name: " << i.second << endl;
             cout << "IP: " << i.first << endl;
+            cout << endl;
+        }
+    }
+    cout << "--------------------------" << endl;
+
+    int unique_connections = 0;
+
+    for (auto& i : ip_name)
+    {
+        if ((i.second.find("reto.com") != string::npos) && (CCDict[i.second].ConINSize() > 0))
+        {
+            unique_connections++;
         }
     }
 
-    int unique_connections = 0;
-    int badCon1 = 0;
-    int badCon2 = 0;
+    cout << endl;
+    cout << "De las computadoras que pertenecen a 'reto.com' " << unique_connections << " de " << networkComputers.size() << " tienen una conexion entrante." << endl;
+    cout << endl;
 
-    for (auto &i : networkComputers)
+    cout << "Algunas de las computadoras que han sido accesadas son: " << endl;
+    cout << endl;
+
+    int sample = 0;
+    for (auto& i : networkComputers)
     {
         if (CCDict[i.second].ConINSize() > 0)
         {
             cout << "Name: " << i.second << endl;
             cout << "IP: " << i.first << endl;
-            while (CCDict[i.second].ConINSize() != 0)
+            cout << "Got accessed by " << CCDict[i.second].getConnectionIN() << " on ";
+            for (int j = 0; j < records.size(); j++)
             {
-                cout << "Recieved a connection from " << CCDict[i.second].getConnectionIN() << " at " << FindFirstConnection(i.first, CCDict[i.second].getConnectionIN()) << endl;
-                CCDict[i.second].removeConnectionIN();
+                if ((records[j].destinationIP == i.first) && (records[j].sourceIP == CCDict[i.second].getConnectionIN()))
+                {
+                    cout << records[j].date <<endl;
+                    break;
+                }
+                
             }
-            cout << endl;
-            unique_connections++;
-        }
-        if (CCDict[i.second].ConOUTSize() > 0)
-        {
             while (CCDict[i.second].ConOUTSize() != 0)
             {
-                if (CCDict[i.second].getConnectionOUT() == "122.210.219.145")
+                string s = CCDict[i.second].getConnectionOUT();
+                if ((s == "122.210.219.145") || (s == "178.62.64.51"))
                 {
-                    badCon1++;
+                    cout << "This computer connected to " << s << "/" << ip_name[s] << " on ";
+                    for (int k = 0; k < records.size(); k++)
+                    {
+                        if ((records[k].destinationIP == s) && (records[k].sourceIP == i.first))
+                        {
+                            cout << records[k].date << endl;
+                            cout << "Source Port: " << records[k].sourcePort << endl;
+                            cout << "Destination Port: " << records[k].destinationPort << endl; 
+                            cout << endl;
+                            break;
+                        }
+                    }
+                    cout << endl;
+                    break;
                 }
-                if (CCDict[i.second].getConnectionOUT() == "178.62.64.51")
-                {
-                    badCon2++;
-                }
+                
                 CCDict[i.second].removeConnectionOUT();
             }
-            cout << "This computer connected to in6u9mmzf2o5dwr8o43l.ru " << badCon1 << " times." << endl;
-            cout << "This computer connected to gncbrmxpm138gzbscrle.ru " << badCon2 << " times." << endl;
-            cout << endl;
+            
+            sample++;   
+        }
+
+        if (sample == 10)
+        {
+            break;
         }
     }
-
-    cout << "Of the computers in the network, " << unique_connections << " of " << networkComputers.size() << " have been accessed. " << endl;
-    cout << endl;
-
-    /*
-
-    Considerando el resultado de las preguntas 3 y 4, ¿Qué crees que este ocurriendo en esta red?
-
-    La computadora carol.reto.com fue infectada y se conecto a todas las demas otras computadoras. 
-
-    */
-
-
-
     
 
     return 0;
