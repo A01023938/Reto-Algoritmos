@@ -231,7 +231,7 @@ int main()
         {
             cout << "Name: " << i.second << endl;
             cout << "IP: " << i.first << endl;
-            cout << "Got accessed by " << CCDict[i.second].getConnectionIN() << " on ";
+            cout << "Got accessed by " << CCDict[i.second].getConnectionIN() << "/" << ip_name[CCDict[i.second].getConnectionIN()] << " on ";
             for (int j = 0; j < records.size(); j++)
             {
                 if ((records[j].destinationIP == i.first) && (records[j].sourceIP == CCDict[i.second].getConnectionIN()))

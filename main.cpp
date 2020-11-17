@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <unordered_set>
+#include <set>
 #include "read.cpp"
 #include "sort.cpp"
 #include "Conexiones.cpp"
@@ -58,6 +59,29 @@ string FindFirstConnection(string IP_destination, string IP_source, vector<Recor
     return date;
 };
 
+
+unordered_map<string, int> dayConnections(string date, vector<Record> r = records)
+{
+    unordered_map<string, int> dayC;
+
+    for (int i = 0; i < r.size(); i++)
+    {
+        if (r[i].date == date && r[i].destinationName.find("reto.com") == string::npos && r[i].destinationName.find("-") == string::npos)
+        {
+            if (dayC.count(r[i].destinationName))
+            {
+                dayC[r[i].destinationName] += 1;
+            }else
+            {
+                dayC[r[i].destinationName] = 1;                
+            }
+        }
+    }
+    
+    return dayC;
+};
+
+
 int main()
 {
     // Vector de records
@@ -106,33 +130,11 @@ int main()
 
     // Las fechas y el numero de conexiones que tienen registradas
 
-    vector<string> d;
+    set<string> d;
 
     for (int i = 0; i < records.size(); i++)
     {
-        d.push_back(records[i].date);
-    }
-
-    QuickSort<string> sort;
-    sort.sort(d);
-
-    unordered_map<string, int> dates;
-    string last_date = d[0];
-    int numCon = 0;
-
-    for (int i = 0; i < d.size(); i++)
-    {
-        if (d[i] != last_date)
-        {
-            pair<string, int> date(d[i], numCon);
-            dates.insert(date);
-            last_date = d[i];
-            numCon = 0;
-        }
-        else
-        {
-            numCon++;
-        }
+        d.insert(records[i].date);
     }
 
     // Puertos de destino
@@ -181,98 +183,26 @@ int main()
         CCDict.insert(PairIP);
     }
 
-    // Avance 3
+    // Avance 4
 
-    // IP Anomalos
-    cout << "---- Nombres Anomalos ----" << endl;
-    cout << endl;
-
-    // IP: 122.210.219.145
-    // Name: in6u9mmzf2o5dwr8o43l.ru
-
-    // IP: 178.62.64.51  
-    // Name: gncbrmxpm138gzbscrle.ru
+    unordered_map<string, int> datesRecords;
+    int num;
+    for (auto i : d)
+    {
+        cout << "Date: " << i << endl;
+        cout << endl;
+        num = 0;
+        datesRecords = dayConnections(i);
+        for (auto j : datesRecords)
+        {
+            cout << j.first << " : " << j.second << endl;
+        }
+        datesRecords.clear();
+        cout << endl;
+    }
 
     
-    // Del los nombres de dominio encontrados en el paso anterior, ¿cuál es su ip? ¿Cómo determinarías esta información de la manera más optima en complejidad temporal?
-
-    for (auto& i : ip_name)
-    {
-        if (i.second == "in6u9mmzf2o5dwr8o43l.ru" || i.second == "gncbrmxpm138gzbscrle.ru")
-        {
-            cout << "Name: " << i.second << endl;
-            cout << "IP: " << i.first << endl;
-            cout << endl;
-        }
-    }
-    cout << "--------------------------" << endl;
-
-    int unique_connections = 0;
-
-    for (auto& i : ip_name)
-    {
-        if ((i.second.find("reto.com") != string::npos) && (CCDict[i.second].ConINSize() > 0))
-        {
-            unique_connections++;
-        }
-    }
-
-    cout << endl;
-    cout << "De las computadoras que pertenecen a 'reto.com' " << unique_connections << " de " << networkComputers.size() << " tienen una conexion entrante." << endl;
-    cout << endl;
-
-    cout << "Algunas de las computadoras que han sido accesadas son: " << endl;
-    cout << endl;
-
-    int sample = 0;
-    for (auto& i : networkComputers)
-    {
-        if (CCDict[i.second].ConINSize() > 0)
-        {
-            cout << "Name: " << i.second << endl;
-            cout << "IP: " << i.first << endl;
-            cout << "Got accessed by " << CCDict[i.second].getConnectionIN() << " on ";
-            for (int j = 0; j < records.size(); j++)
-            {
-                if ((records[j].destinationIP == i.first) && (records[j].sourceIP == CCDict[i.second].getConnectionIN()))
-                {
-                    cout << records[j].date <<endl;
-                    break;
-                }
-                
-            }
-            while (CCDict[i.second].ConOUTSize() != 0)
-            {
-                string s = CCDict[i.second].getConnectionOUT();
-                if ((s == "122.210.219.145") || (s == "178.62.64.51"))
-                {
-                    cout << "This computer connected to " << s << "/" << ip_name[s] << " on ";
-                    for (int k = 0; k < records.size(); k++)
-                    {
-                        if ((records[k].destinationIP == s) && (records[k].sourceIP == i.first))
-                        {
-                            cout << records[k].date << endl;
-                            cout << "Source Port: " << records[k].sourcePort << endl;
-                            cout << "Destination Port: " << records[k].destinationPort << endl; 
-                            cout << endl;
-                            break;
-                        }
-                    }
-                    cout << endl;
-                    break;
-                }
-                
-                CCDict[i.second].removeConnectionOUT();
-            }
-            
-            sample++;   
-        }
-
-        if (sample == 10)
-        {
-            break;
-        }
-    }
+    
     
 
     return 0;
