@@ -5,10 +5,10 @@
 #include <string>
 #include <algorithm>
 #include <unordered_map>
+#include <map>
 #include <unordered_set>
 #include <set>
 #include "read.cpp"
-#include "sort.cpp"
 #include "Conexiones.cpp"
 
 using namespace std;
@@ -45,24 +45,10 @@ void read(string path)
     }
 };
 
-string FindFirstConnection(string IP_destination, string IP_source, vector<Record> records = records)
+
+map<string, int> dayConnections(string date, vector<Record> r = records)
 {
-    string date = "--no date--";
-
-    for (int i = 0; i < records.size(); i++)
-    {
-        if (records[i].sourceIP == IP_source && records[i].destinationIP == IP_destination)
-        {
-            date = records[i].date;
-        }
-    }
-    return date;
-};
-
-
-unordered_map<string, int> dayConnections(string date, vector<Record> r = records)
-{
-    unordered_map<string, int> dayC;
+    map<string, int> dayC;
 
     for (int i = 0; i < r.size(); i++)
     {
@@ -80,6 +66,29 @@ unordered_map<string, int> dayConnections(string date, vector<Record> r = record
     
     return dayC;
 };
+
+void topConnections(string date, int n)
+{
+    map<string, int> datesRecords = dayConnections(date);
+    map<int, string> topC;
+
+    for (auto i : datesRecords)
+    {
+        topC[i.second] = i.first;
+    }
+
+    int num = 0;
+    for (map<int, string>::reverse_iterator i = topC.rbegin(); i != topC.rend(); i++)
+    {
+        cout << i->first << " : " << i->second << endl;
+        if (num == n)
+        {
+            break;
+        }
+        num++;
+    }
+
+}
 
 
 int main()
@@ -185,19 +194,11 @@ int main()
 
     // Avance 4
 
-    unordered_map<string, int> datesRecords;
-    int num;
     for (auto i : d)
     {
         cout << "Date: " << i << endl;
         cout << endl;
-        num = 0;
-        datesRecords = dayConnections(i);
-        for (auto j : datesRecords)
-        {
-            cout << j.first << " : " << j.second << endl;
-        }
-        datesRecords.clear();
+        topConnections(i, 5);
         cout << endl;
     }
 
