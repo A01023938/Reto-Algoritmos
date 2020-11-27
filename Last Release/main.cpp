@@ -10,6 +10,7 @@
 #include <set>
 #include "read.cpp"
 #include "Conexiones.cpp"
+#include "grafo.cpp"
 
 using namespace std;
 
@@ -45,50 +46,6 @@ void read(string path)
     }
 };
 
-
-map<string, int> dayConnections(string date, vector<Record> r = records)
-{
-    map<string, int> dayC;
-
-    for (int i = 0; i < r.size(); i++)
-    {
-        if (r[i].date == date && r[i].destinationName.find("reto.com") == string::npos && r[i].destinationName.find("-") == string::npos)
-        {
-            if (dayC.count(r[i].destinationName))
-            {
-                dayC[r[i].destinationName] += 1;
-            }else
-            {
-                dayC[r[i].destinationName] = 1;                
-            }
-        }
-    }
-    
-    return dayC;
-};
-
-void topConnections(string date, int n)
-{
-    map<string, int> datesRecords = dayConnections(date);
-    map<int, string> topC;
-
-    for (auto i : datesRecords)
-    {
-        topC[i.second] = i.first;
-    }
-
-    int num = 0;
-    for (map<int, string>::reverse_iterator i = topC.rbegin(); i != topC.rend(); i++)
-    {
-        cout << i->first << " : " << i->second << endl;
-        if (num == n)
-        {
-            break;
-        }
-        num++;
-    }
-
-}
 
 
 int main()
@@ -194,17 +151,203 @@ int main()
 
     // Avance 4
 
-    for (auto i : d)
+
+    // // Grafo de conexiones internas por dia
+
+    vector<Graph<string>> graphConByDate;
+    // // Por cada fecha
+    // for (auto date : d)
+    // {
+    //     // Crea un grafo que contenga las conexiones de las computadoras internas que se hicieron
+    //     Graph<string> conDayA;
+        
+    //     // Indica que dia es
+    //     // cout << endl;
+    //     // cout << date << endl;
+    //     // cout << endl;
+
+    //     // Iterar sobre los retos para buscar las conexiones que sucedieron ese dia
+    //     for (int i = 0; i < records.size(); i++)
+    //     {
+    //         // La conexion tiene que ser de una computadora "reto.com" a una comutadora "reto.com" y la fecha tiene que ser la de ese dia
+    //         if (records[i].sourceName.find("reto.com") != string::npos && records[i].destinationName.find("reto.com") != string::npos && records[i].date == date)
+    //         {
+    //             // Si el primer no esta en el grafo
+    //             if (conDayA.nodos.find(records[i].sourceName) == conDayA.nodos.end())
+    //             {
+    //                 // Agregar el nodo
+    //                 conDayA.agregarNodo(records[i].sourceName);
+    //                 // cout << "Se agrego el nodo: " << records[i].sourceName << endl;
+
+                
+    //             }
+
+    //             // Si el segundo no esta en el grafo
+    //             if (conDayA.nodos.find(records[i].destinationName) == conDayA.nodos.end())
+    //             {
+    //                 // Agregar el nodo
+    //                 conDayA.agregarNodo(records[i].destinationName);
+    //                 // cout << "Se agrego el nodo: " << records[i].destinationName << endl;
+
+    //             }
+
+    //             // Si ya existe una conexion entre ambos
+    //             if (conDayA.nodos[records[i].sourceName]->siguientes.find(conDayA.nodos[records[i].destinationName]) != conDayA.nodos[records[i].sourceName]->siguientes.end() )
+    //             {
+    //                 // modificarPeso(Nodo<T> *nodo, int nuevoPeso = 1)
+    //                 conDayA.nodos[records[i].sourceName]->modificarPeso(conDayA.nodos[records[i].destinationName]);
+    //                 // cout << "Se modifico el peso de " << records[i].sourceName << " a " << records[i].destinationName << " a ser " << conDayA.nodos[records[i].sourceName]->verPeso(conDayA.nodos[records[i].destinationName]) << endl;
+
+    //             // Si no existe una conexion entre ambos
+    //             }else
+    //             {
+    //                 conDayA.agregarArcoDirigido(records[i].sourceName, records[i].destinationName);
+    //                 // cout << "Se realizo una conexion de " << records[i].sourceName << " a " << records[i].destinationName << " con un peso de " << conDayA.nodos[records[i].sourceName]->verPeso(conDayA.nodos[records[i].destinationName]) << endl;
+
+    //             }
+    //         }
+    //     }
+
+    //     graphConByDate.push_back(conDayA);  
+    // }
+    
+
+    // int dates[10] = {10,11,12,13,14,17,18,20,21};
+
+    // for (int i = 0; i < graphConByDate.size(); i++)
+    // {
+    //     cout << endl;
+    //     cout << "Day: " << dates[i] << "-8-20" << endl;
+    //     cout << endl;
+
+    //     graphConByDate[i].verPesos();
+    // }
+    
+
+    // Grafo de conexiones a paginas web
+
+    // graphConByDate.clear();
+
+    // Por cada fecha
+    for (auto date : d)
     {
-        cout << "Date: " << i << endl;
+        // Crea un grafo que contenga las conexiones de las computadoras internas que se hicieron
+        Graph<string> conDayA;
+
+        // Iterar sobre los retos para buscar las conexiones que sucedieron ese dia
+        for (int i = 0; i < records.size(); i++)
+        {
+            // La conexion tiene que ser de una computadora "reto.com" a una pagina web y la fecha tiene que ser la de ese dia
+            if (records[i].sourceName.find("reto.com") != string::npos && records[i].destinationName.find("reto.com") == string::npos && records[i].date == date)
+            {
+                // Si el primer no esta en el grafo
+                if (conDayA.nodos.find(records[i].sourceName) == conDayA.nodos.end())
+                {
+                    // Agregar el nodo
+                    conDayA.agregarNodo(records[i].sourceName);
+                    // cout << "Se agrego el nodo: " << records[i].sourceName << endl;
+
+                
+                }
+
+                // Si el segundo no esta en el grafo
+                if (conDayA.nodos.find(records[i].destinationName) == conDayA.nodos.end())
+                {
+                    // Agregar el nodo
+                    conDayA.agregarNodo(records[i].destinationName);
+                    // cout << "Se agrego el nodo: " << records[i].destinationName << endl;
+
+                }
+
+                // Si ya existe una conexion entre ambos
+                if (conDayA.nodos[records[i].sourceName]->siguientes.find(conDayA.nodos[records[i].destinationName]) != conDayA.nodos[records[i].sourceName]->siguientes.end() )
+                {
+                    // modificarPeso(Nodo<T> *nodo, int nuevoPeso = 1)
+                    conDayA.nodos[records[i].sourceName]->modificarPeso(conDayA.nodos[records[i].destinationName]);
+                    // cout << "Se modifico el peso de " << records[i].sourceName << " a " << records[i].destinationName << " a ser " << conDayA.nodos[records[i].sourceName]->verPeso(conDayA.nodos[records[i].destinationName]) << endl;
+
+                // Si no existe una conexion entre ambos
+                }else
+                {
+                    conDayA.agregarArcoDirigido(records[i].sourceName, records[i].destinationName);
+                    // cout << "Se realizo una conexion de " << records[i].sourceName << " a " << records[i].destinationName << " con un peso de " << conDayA.nodos[records[i].sourceName]->verPeso(conDayA.nodos[records[i].destinationName]) << endl;
+
+                }
+            }
+        }
+
+        graphConByDate.push_back(conDayA);  
+    }
+    
+
+    int dates[10] = {10,11,12,13,14,17,18,19,20,21};
+
+    for (int i = 0; i < graphConByDate.size(); i++)
+    {
         cout << endl;
-        topConnections(i, 5);
+        cout << "Day: " << dates[i] << "-8-20" << endl;
         cout << endl;
+
+        graphConByDate[i].checarCon("twitter.com");
     }
 
-    
-    
-    
+    /*
+    Utilizando un grafo con las conexiones entre las ip de la red interna, determina la cantidad de computadoras con las que se ha conectado A por día. ¿Es el vértice que más conexiones salientes hacia la red interna tiene?
+
+    10-8-2020 -> 0
+    11-8-2020 -> 0
+    12-8-2020 -> 0
+    13-8-2020 -> 0
+    14-8-2020 -> 31 Dia que ocurrio la infeccion y si es el vertice con mas conexiones
+    17-8-2020 -> 0
+    18-8-2020 -> 0
+    19-8-2020 -> 0
+    20-8-2020 -> 0
+    21-8-2020 -> 0
+
+    No existen computadoras que se conecten hacia A (carol.reto.com)
+
+    Computadoras que se conectan a in6u9mmzf2o5dwr8o43l.ru por dia
+
+    10-8-2020 -> 0
+    11-8-2020 -> 0
+    12-8-2020 -> 0
+    13-8-2020 -> 0
+    14-8-2020 -> 31 Dia que ocurrio la infeccion 
+    17-8-2020 -> 31
+    18-8-2020 -> 31
+    19-8-2020 -> 31
+    20-8-2020 -> 31
+    21-8-2020 -> 31
+
+    Computadoras que se conectan a gncbrmxpm138gzbscrle.ru
+
+    10-8-2020 -> 0
+    11-8-2020 -> 0
+    12-8-2020 -> 0
+    13-8-2020 -> 0
+    14-8-2020 -> 1 Dia que ocurrio la infeccion 
+    17-8-2020 -> 0
+    18-8-2020 -> 0
+    19-8-2020 -> 0
+    20-8-2020 -> 0
+    21-8-2020 -> 0
+   
+   Computadoras que se conectan a twitter.com
+
+    10-8-2020 -> 7
+    11-8-2020 -> 8
+    12-8-2020 -> 11
+    13-8-2020 -> 7
+    14-8-2020 -> 5 Dia que ocurrio la infeccion 
+    17-8-2020 -> 4
+    18-8-2020 -> 30
+    19-8-2020 -> 5
+    20-8-2020 -> 6
+    21-8-2020 -> 7
+
+    */
+
 
     return 0;
 }
